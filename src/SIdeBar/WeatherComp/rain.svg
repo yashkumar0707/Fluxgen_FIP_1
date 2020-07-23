@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="17.977" viewBox="0 0 21 17.977">
+<defs><style>.d{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}</style></defs>
+<g transform="translate(0.5 0.5)">
+<path class="d" d="M24.194,13.429l-.041,0v0a4.952,4.952,0,0,0-9.464-2.082,3.71,3.71,0,0,0-1.746-.436A3.751,3.751,0,0,0,9.408,13.44c-.07-.006-.141-.011-.214-.011a2.518,2.518,0,0,0,0,5.036h15a2.518,2.518,0,0,0,0-5.036Z" transform="translate(-6.694 -8.434)"/>
+<g transform="translate(4.651 11.802)">
+<line class="d" y2="0.523"/>
+<line class="d" y2="0.523" transform="translate(2.326)"/>
+<line class="d" y2="0.523" transform="translate(4.651)"/>
+<line class="d" y2="0.523" transform="translate(6.977)"/>
+<line class="d" y2="0.523" transform="translate(9.302)"/>
+<line class="d" y2="0.523" transform="translate(10.698 2.326)"/>
+<line class="d" y2="0.523" transform="translate(8.372 2.326)"/>
+<line class="d" y2="0.523" transform="translate(6.047 2.326)"/>
+<line class="d" y2="0.523" transform="translate(3.721 2.326)"/>
+<line class="d" y2="0.523" transform="translate(1.395 2.326)"/>
+<line class="d" y2="0.523" transform="translate(9.302 4.651)"/>
+<line class="d" y2="0.523" transform="translate(6.977 4.651)"/>
+<line class="d" y2="0.523" transform="translate(4.651 4.651)"/>
+<line class="d" y2="0.523" transform="translate(2.326 4.651)"/>
+<line class="d" y2="0.523" transform="translate(0 4.651)"/></g></g></svg>

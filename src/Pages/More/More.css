@@ -1,0 +1,10 @@
+.MoreLinkActvityPage{
+    padding-top: 5vh;
+    padding-left: 10vh;
+    
+}
+
+.MainMorePage_Content{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,55 @@
+.SideBarmin {
+    position: fixed;
+    height: 100%;
+    background: #2c647c;
+    top: 0;
+    left: 0;
+    width: 3%;
+    max-width: 300 px;
+    min-width: 40px;
+    box-shadow: 3px 0px 15px rgba(0,0,0,0.5);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.SideBar_ListItemText {
+    height: 80%;
+    color: white;
+}
+
+.SideBarmin_ListItemIcon {
+    height: 100%;
+    fill: white;
+}
+.SideBarmin_ListItem {
+    width: 100%;
+    height: 30%;
+}
+
+.Arrowmin {
+    position: fixed;
+    left:3%;
+    bottom:0px;
+    z-index: 300;
+    background-color: #d7dae3;
+}
+
+.Arrowmin :hover{
+    color: white;
+}
+
+.SideBarmin_ListImage{
+    position: fixed;
+    background: white;
+    bottom: 0px;
+    width: 3%;
+    min-width: 40px;
+    max-height: 24%;
+}
+
+.AquaGenmin{
+    display: block;
+    width: 100%;
+}

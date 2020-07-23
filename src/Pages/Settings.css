@@ -1,0 +1,20 @@
+.MainSettingsPage {
+    height: 100%;
+    width: 100%;
+    }
+
+.MainPage_Content {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+}
+
+.Settings_Consumption{
+    padding-top: 5vh !important;
+    padding-left: 18.5vh !important;
+}
+
+.Settings_FormItem {
+    padding-top: 3vh;
+}
+    

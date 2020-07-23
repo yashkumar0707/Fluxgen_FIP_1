@@ -1,0 +1,131 @@
+.Contact_Us_Page{
+    height: 100%;
+    width: 100%;
+}
+
+.ContactUsPage_Navigate{
+    position: fixed;
+    left: 50%;
+    top: 15vh;
+    display: flex;
+    flex-direction: row;
+    /* margin-left: 100%; */
+}
+
+.PageDependentContent{
+    position: fixed;
+    top: 28vh;
+    left: 32%;
+}
+
+.Contact_Us_Subject{
+    color: #333333;
+    font-family: sans-serif;
+    font-size: 1.3rem;
+}
+
+.Contact_Us_Subject_Textfield{
+    position: relative;
+    top: 1vh;
+    width: 200%;
+}
+
+.Contact_Us_Description {
+    color: #333333;
+    font-family: sans-serif;
+    font-size: 1.3rem;
+    padding-top: 8vh;
+    
+}
+
+.Contact_Us_Description_Textfield {
+    position: relative;
+    top: 1vh;
+    width: 200%;
+}
+.Contact_Us_Phone {
+    color: #333333;
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    padding-top: 8vh;
+}
+
+.Send_Button_Contact_Us{
+    position: relative;
+    float: right;
+    left: 100%;
+}
+
+.Succesful_Form_Submission_Contact {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    top: 15vh;
+}
+
+.Form_Submit_Heading_Contact{
+    position: fixed;
+    left: 50%;
+    font-family: sans-serif;
+    font-size: 1.15em;
+}
+
+.Form_Submit_Body_Contact {
+    position: relative;
+    top: 9vh;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+.ContactUsPage_Content {
+    width: 80%;
+    
+}
+
+.Form_Submit_Phone_Contact{
+    position: relative;
+    top: 20vh;
+    left: 15%;
+    text-align: left;
+    font-family: sans-serif;
+    font-size: .875em;
+}
+
+.Form_Submit_Contact_Back {
+    position: relative;
+    top: 25vh;
+    left: 35%;
+}
+
+.FAQ_Page_Content{
+    position: relative;
+    top: 15vh;
+    left: 10%;
+    font-family: sans-serif;
+    font-size: .875em;
+}
+
+.FAQ_Useful {
+    position: relative;
+    left: 50%;
+    display: flex;
+}
+
+.FAQ_useful_text {
+    font-family: sans-serif;
+    font-size: 1em;
+    position: relative;
+    top: 2vh;
+}
+
+.FAQ_Back {
+    position: relative;
+    top: 2vh;
+    left: 60%;
+}
+
+.FAQ_Points li {
+    font-family: sans-serif;
+    font-size: 1.225em;
+    padding-top: 1vh;
+}

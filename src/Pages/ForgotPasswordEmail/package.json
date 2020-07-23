@@ -1,0 +1,7 @@
+{
+    "name": "ForgotPasswordEmail",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ForgotPasswordEmail.js"
+  }
+  

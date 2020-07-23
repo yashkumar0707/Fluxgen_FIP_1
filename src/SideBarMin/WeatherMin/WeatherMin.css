@@ -1,0 +1,37 @@
+.Main {
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+.Main_Text {
+    font-size: 0.7rem;
+    color: #333333;
+    padding-bottom: 3px;
+    letter-spacing: 0.4px;
+
+}
+
+.Time_Text {
+    font-size: 0.55rem;
+    color: #333333;
+    padding-bottom: 7px;
+    letter-spacing: 0.4px;
+
+}
+.Date_Text {
+    font-size: 0.6rem;
+    color: #333333;
+    padding-bottom: 7px;
+    letter-spacing: 0.4px;
+}
+
+.Day_Text {
+    font-size: 0.5rem;
+    color: #333333;
+    letter-spacing: 0.4px;
+}
+.Temp_Text {
+    font-size: 0.6rem;
+    color: #333333;
+    letter-spacing: 0.4px;
+}

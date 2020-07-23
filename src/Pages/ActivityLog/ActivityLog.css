@@ -1,0 +1,66 @@
+.ActivityLog_Page{
+    height: 100%;
+    width: 100%;
+}
+.NewLogEntry {
+    padding-top: 5%;
+    padding-left: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.Date_Time_Picker {
+    padding-top: 4vh;
+    padding-left: 2%;
+}
+
+.ItemsDropDown{
+    /* padding-top: 2vh; */
+    position: relative;
+    left: 1%;
+}
+
+.Dropbutton {
+    width: 10%;
+}
+
+.TextBoxComment {
+    position: relative;
+}
+.TextBoxCommentFR {
+    min-width: 40vh;
+}
+
+.sendbutton {
+    position: relative;
+    /* padding-top: 2vh; */
+}
+.MainActivityPage_Content {
+    display: flex;
+    flex-direction: column;
+    width: 82%;
+    height: 80vh;
+    overflow-y: auto;
+}
+.MainActivityPage_Content::-webkit-scrollbar{
+    width: 1.5vh;
+}
+
+.MainActivityPage_Content::-webkit-scrollbar-thumb{
+    background-color: #333333;
+}
+.ActivityLogTable {
+    position: relative;
+    top: 6vh;
+    left: 8%;
+    width: 84%;
+}
+
+.ItemsDropDownInitial {
+    min-width: 200px;
+}
+
+.UploadDocument {
+    position: relative;
+    top: 10vh;
+}
