@@ -9,7 +9,7 @@ import Template from './Pages/Template_with_sidebar_Nav/Template';
 import "core-js";
 import 'core-js/features/set/map';
 import './App.scss';
-
+import Cookies from 'js-cookie'
 
 import Sump from './Pages/Storage/Sump/Sump';
 import { Dashboard } from '@material-ui/icons';
@@ -31,8 +31,11 @@ class App extends React.Component {
       storage: '',
       consumption: '',
       quality: '',
-      auth: 'sxxsxss'
+      auth: ''
     }
+  }
+  componentDidMount() {
+    this.setState({ auth: Cookies.get('auth') })
   }
   settingsCallBack = (childdata) => {
     // Settings page returns storage,consumption and quality array, this is passed on to each webpage by app.js
@@ -46,12 +49,15 @@ class App extends React.Component {
     // Settings page returns storage,consumption and quality array, this is passed on to each webpage by app.js
     console.log(childdata)
     this.setState({ auth: childdata })
+    Cookies.set('auth', this.state.auth, { expires: 1 });
+    console.log('yeahhh' + Cookies.get('auth'))
   }
   render() {
     return (
+
       <BrowserRouter className="App">
         <React.Suspense fallback={loading()}>
-          <Switch>
+          {this.state.auth && <Switch>
             <Route exact path="/Activity"
               render={props => (
                 <Activity {...props}
@@ -125,10 +131,21 @@ class App extends React.Component {
             <Route exact path="/forgotpasswordemail" name="Change Password" render={props => <ForgotPasswordEmail {...props} />} />
             <Route exact path="/forgotpasswordotp" name="Change Password" render={props => <ForgotPasswordOTP {...props} />} />
             <Route exact path="/changepassword/:token" name="Change Password" render={props => <ChangePassword {...props} />} />
-            {/* <Route path="/" name="Home" render={props => <DefaultLayout {...props} />} /> */}
+
           </Switch>
+          }
+          {!this.state.auth && <Switch>
+            {/* <Redirect to="/login" ></Redirect> */}
+            <Route exact path="/login"
+              name="Login Page"
+              render={props => (
+                <Login {...props}
+                  appCallBack1={this.loginCallBack} />
+              )} />
+          </Switch>
+          }
         </React.Suspense>
-      </BrowserRouter>
+      </BrowserRouter >
     )
   }
 }
