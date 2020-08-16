@@ -122,10 +122,10 @@ class Dashboard extends React.Component {
     getfromApi = async () => {
         let myheaders = {
             //Token is added here
-            "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI3ZWRmODRmNC03MjJiLTQ3OWEtOGY2ZS1iYjI3M2NmMTM0NGUiLCJleHAiOjE1OTAzMDc5NjN9.dLRzCBscIZkfzTcrI4BqvvDy-uJ_URcoDCm52BA1l3g"
+            "authorization": this.props.auth
         }
 
-        console.log("auth" + this.props.auth)
+        console.log("auth: " + this.props.auth)
         //fetching everyday consumption
         try {
             var i;
@@ -138,6 +138,7 @@ class Dashboard extends React.Component {
             })
                 .then(response => response.json())
                 .then(bar => {
+                    console.log(bar)
                     for (i = 10; i < 20; i++) {
                         date.unshift(Object.values(bar.data[i]))
                     }
@@ -145,8 +146,8 @@ class Dashboard extends React.Component {
                         bar_consumption.unshift(date[i][0].process_consumption / 1000)
                         total_consumption = total_consumption + bar_consumption[i]
                     }
-                })
-
+                }
+                )
             this.setState({ bar_consumption: bar_consumption, total_consumption: total_consumption })
         } catch (err) {
             console.log(err.message);
@@ -162,6 +163,7 @@ class Dashboard extends React.Component {
             })
                 .then(response => response.json())
                 .then(balance => {
+                    console.log(balance)
                     total_supply = (balance.data.units[0].DEMO1SU2.process_level + balance.data.units[1].DEMO1SU1.process_level) / 1000
                     total_storage = (balance.data.units[0].DEMO1SU2.max_capacity + balance.data.units[1].DEMO1SU1.max_capacity) / 1000
 
@@ -437,7 +439,7 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="animated fadeIn" style={{ marginLeft: this.state.sidewidth }}>
                     <Row>
-                        <Col>
+                        <Col xl={12} sm={12} md={12} lg={12}>
                             <Card>
                                 <CardBody>
                                     <Row>
@@ -457,14 +459,14 @@ class Dashboard extends React.Component {
                                     </Row>
                                     <hr className="mt-0" />
                                     <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                        <Bar data={this.barGraph()} options={this.mainChartOpts()} height={300} />
+                                        <Bar data={this.barGraph()} options={this.mainChartOpts()} height={1000} />
                                     </div>
                                 </CardBody>
                             </Card>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
+                        <Col xl={6} sm={12} md={12} lg={12}>
                             <Card style={{ height: "100%" }}>
                                 <CardBody>
                                     <Row>
@@ -476,11 +478,11 @@ class Dashboard extends React.Component {
                                     <hr className="mt-0" />
                                     <br />
                                     <div className="chart-wrapper">
-                                        <Doughnut
+                                        <Doughnut style={{ height: 1000 }}
                                             data={this.state.doughnut_data}
                                             options={{
                                                 responsive: true,
-                                                maintainAspectRatio: false,
+                                                maintainAspectRatio: true,
                                                 legend: {
                                                     display: true,
                                                     //to postition label to the right
@@ -510,7 +512,7 @@ class Dashboard extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Col>
+                        <Col xl={6} sm={12} md={12} lg={12}>
                             <Card style={{ height: "100%" }}>
                                 <CardBody>
                                     <Row>
@@ -521,9 +523,9 @@ class Dashboard extends React.Component {
                                     <br />
                                     <hr className="mt-0" />
                                     <br />
-                                    <Row style={{ margin: "0.15rem", textAlign: "center" }}>
+                                    <Row style={{ margin: "0.15rem", marginTop: '20px', textAlign: "center" }}>
                                         <Col>
-                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_supply), borderBottomWidth: "thick", height: "100%", width: '110%' }}>
+                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_supply), borderBottomWidth: "thick", height: "130%", width: '110%' }}>
                                                 <div>
                                                     <br />
                                                     <b>TOTAL SUPPLY</b>
@@ -544,7 +546,7 @@ class Dashboard extends React.Component {
                                             </div>
                                         </IconContext.Provider>
                                         <Col>
-                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_storage), borderBottomWidth: "thick", height: "100%", width: '110%' }}>
+                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_storage), borderBottomWidth: "thick", height: "130%", width: '110%' }}>
                                                 <div>
                                                     <br />
                                                     <b>TOTAL STORAGE</b>
@@ -566,7 +568,7 @@ class Dashboard extends React.Component {
                                             </div>
                                         </IconContext.Provider>
                                         <Col>
-                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_consumption), borderBottomWidth: "thick", height: "100%", width: '100%' }}>
+                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_consumption), borderBottomWidth: "thick", height: "130%", width: '100%' }}>
                                                 <div>
                                                     <br />
                                                     <b>TOTAL CONSUMPTION</b>
@@ -587,7 +589,7 @@ class Dashboard extends React.Component {
                                             </div>
                                         </IconContext.Provider>
                                         <Col>
-                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_treated), borderBottomWidth: "thick", height: "100%", width: '110%' }}>
+                                            <Card style={{ borderBottomColor: this.borderColor(this.state.total_treated), borderBottomWidth: "thick", height: "130%", width: '110%' }}>
                                                 <div>
                                                     <br />
                                                     <b>TOTAL TREATED</b>

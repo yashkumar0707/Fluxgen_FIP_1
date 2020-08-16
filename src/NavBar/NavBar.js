@@ -4,7 +4,7 @@ import { KeyboardArrowDown } from '@material-ui/icons'
 import { SvgIcon } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import Image_1 from './Image_1.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
 import watboy_text from './watboy_text.png'
 import CancelIcon from '@material-ui/icons/Cancel';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -16,6 +16,7 @@ const NavBar = (props) => {
     const [left, setLeft] = useState('3%')//Depending on whether sidebar is exapnded or not navbar will have different starting position
     const [flex, setFlex] = useState('0.97')//Used to add pace between the heading and the settings icon
     const [show, setShow] = useState(false)
+    var flag = 1
     useEffect(() => {
         if (props.big === true) {//Expanded sidebar
             setNar(true)
@@ -39,6 +40,7 @@ const NavBar = (props) => {
     }
     const logout = () => {
         Cookies.remove('auth');
+        flag = 0
     }
     return (
         <div>
@@ -85,10 +87,12 @@ const NavBar = (props) => {
                     </SvgIcon> */}
                     <NotificationsIcon> </NotificationsIcon>
                 </div>
+                {/* <Link to="/login"> */}
                 <div className="logout" onClick={logout}>
                     {/* Svg path of the settings icon, not to be tampered with */}
                     <ExitToAppIcon></ExitToAppIcon>
                 </div>
+                {/* </Link> */}
 
                 {/* Static username and dropdown */}
                 <div className="toolbar_username">
@@ -114,7 +118,13 @@ const NavBar = (props) => {
                 {show && <img src={watboy_text} width="530" height="200" onClick={imagehandler} ></img>}
                 {/* <input type="text" value="texxtbox" className="textbox"></input> */}
             </div >
-        </div>
+            {!flag &&
+                < Route exact path="/dashboard">
+                    <Redirect to="/login" />
+                </Route>
+            }
+        </div >
+
     )
 }
 

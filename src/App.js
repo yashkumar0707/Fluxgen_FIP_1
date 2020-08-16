@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
+//import { hashHistory } from 'react-router;'
 import Settings from './Pages/Settings';
 import Activity from './Pages/ActivityLog/ActivityLog'
 import More from './Pages/More/More'
@@ -19,11 +20,12 @@ const loading = () => <div className="animated fadeIn pt-3 text-center">Loading.
 const Dashboard2 = React.lazy(() => import('./Pages/NewDashboard/Dashboard'));
 const Login = React.lazy(() => import('./Pages/Login'));
 const Trial = React.lazy(() => import('./Pages/Trial'));
+
 const ChangePassword = React.lazy(() => import('./Pages/ChangePassword/ChangePassword'));
 const ForgotPassword = React.lazy(() => import('./Pages/ForgotPassword/ForgotPassword'));
 const ForgotPasswordEmail = React.lazy(() => import('./Pages/ForgotPasswordEmail/ForgotPasswordEmail'));
 const ForgotPasswordOTP = React.lazy(() => import('./Pages/ForgotPasswordOTP/ForgotPasswordOTP'));
-
+var CryptoJS = require("crypto-js");
 class App extends React.Component {
   constructor() {
     super();
@@ -35,7 +37,24 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    this.setState({ auth: Cookies.get('auth') })
+    var bytes = ''
+    var originalText = ''
+    if (Cookies.get('auth')) {
+      var test = Cookies.get('auth')
+      console.log(test)
+      bytes = CryptoJS.AES.decrypt(test, 'secret key 123');
+      //var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      originalText = bytes.toString(CryptoJS.enc.Utf8);
+      this.setState({ auth: originalText })
+      console.log(originalText)
+    }
+
+    this.setState({ auth: originalText })
+    if (!this.state.auth) {
+      // /console.log('syash')
+      // hashHistory.push('/login')
+      //  return <Redirect to="/login"></Redirect>
+    }
   }
   settingsCallBack = (childdata) => {
     // Settings page returns storage,consumption and quality array, this is passed on to each webpage by app.js
@@ -49,8 +68,12 @@ class App extends React.Component {
     // Settings page returns storage,consumption and quality array, this is passed on to each webpage by app.js
     console.log(childdata)
     this.setState({ auth: childdata })
-    Cookies.set('auth', this.state.auth, { expires: 1 });
-    console.log('yeahhh' + Cookies.get('auth'))
+    var original = childdata.toString()
+    console.log(original)
+    var ciphertext = CryptoJS.AES.encrypt(original, 'secret key 123').toString();
+    console.log(ciphertext);
+    Cookies.set('auth', ciphertext, { expires: 1 });
+    console.log('cookie: ' + Cookies.get('auth'))
   }
   render() {
     return (
@@ -120,12 +143,10 @@ class App extends React.Component {
                 />
               )}
             />
-            <Route exact path="/login"
-              name="Login Page"
-              render={props => (
-                <Login {...props}
-                  appCallBack1={this.loginCallBack} />
-              )} />
+            <Route exact path="/login" >
+              <Redirect to="/dashboard" />
+            </Route>
+
             <Route exact path="/trial" name="Trial Page" render={props => <Trial {...props} />} />
             <Route exact path="/forgotpassword" name="Change Password" render={props => <ForgotPassword {...props} />} />
             <Route exact path="/forgotpasswordemail" name="Change Password" render={props => <ForgotPasswordEmail {...props} />} />
@@ -136,13 +157,24 @@ class App extends React.Component {
           }
           {!this.state.auth && <Switch>
             {/* <Redirect to="/login" ></Redirect> */}
+            <Route exact path="/">
+
+            </Route>
             <Route exact path="/login"
               name="Login Page"
               render={props => (
                 <Login {...props}
                   appCallBack1={this.loginCallBack} />
               )} />
+            {/* <Route exact path="/:pid">
+              <Redirect to="/login" />
+            </Route> */}
           </Switch>
+            // && <Redirect to='/login' name="Login Page"
+            //   render={props => (
+            //     <Login {...props}
+            //       appCallBack1={this.loginCallBack} />
+            //   )} />
           }
         </React.Suspense>
       </BrowserRouter >

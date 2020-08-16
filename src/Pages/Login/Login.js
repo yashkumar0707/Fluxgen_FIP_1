@@ -11,7 +11,6 @@ class Login extends Component {
     this.state = {
       flag: 0
     }
-
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -26,7 +25,7 @@ class Login extends Component {
     let headers = new Headers();
     headers.append('Authorization', 'Basic ' + base64.encode(email + ":" + password))
     if (email && password) {
-      fetch('http://54.244.196.27/aquagen/v1/auth/login', {
+      fetch('https://api.fluxgen.in/aquagen/v1/auth/login', {
         method: 'GET',
         headers: headers
       })
