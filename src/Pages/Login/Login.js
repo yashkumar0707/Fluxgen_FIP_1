@@ -41,7 +41,7 @@ class Login extends Component {
           else {
             //redirecting incase of authentication sucess
             let data = []
-            data.push(response.data.token)
+            data.push(response.data)
             this.props.appCallBack1(data)
             console.log(data)
             this.props.history.push('/dashboard')

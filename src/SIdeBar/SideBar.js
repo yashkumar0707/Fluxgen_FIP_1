@@ -161,7 +161,8 @@ class SideBarExp extends React.Component {
         }
         this.setState(newState)
         console.log(this.state)
-        this.props.activeState("More")
+        //return <Link to="/More"></Link>
+        //this.history.push('/More')
         // Sets the more variable in state to true and the others to false, sends More as heading to app.js to add to navbar
     }
     resize = () => {
@@ -305,18 +306,19 @@ class SideBarExp extends React.Component {
                     <List component="nav" aria-label="main mailbox folders" className="SideBar_List_main">
 
                         {/* <Home /> */}
-                        <ListItem className="SideBar_ListItem" button selected={this.state.Home} onClick={this.setHome}>
-                            <ListItemIcon className="SideBar_ListItemIcon">
-                                <SvgIcon>
-                                    {/* Path tag for home icon */}
-                                    <path d="M10,20V14h4v6h5V12h3L12,3,2,12H5v8Z" ></path>
-                                    {/* <Home /> */}
-                                </SvgIcon>
-                            </ListItemIcon>
-                            {/* Conditional rendering of text */}
-                            {this.text(160, "Home")}
-                        </ListItem>
-
+                        <Link to="/dashboard">
+                            <ListItem className="SideBar_ListItem" button selected={this.state.Home} onClick={this.setHome}>
+                                <ListItemIcon className="SideBar_ListItemIcon">
+                                    <SvgIcon>
+                                        {/* Path tag for home icon */}
+                                        <path d="M10,20V14h4v6h5V12h3L12,3,2,12H5v8Z" ></path>
+                                        {/* <Home /> */}
+                                    </SvgIcon>
+                                </ListItemIcon>
+                                {/* Conditional rendering of text */}
+                                {this.text(160, "Home")}
+                            </ListItem>
+                        </Link>
 
                         {/*Water Consumption Button  */}
                         <ListItem className="SideBar_ListItem" button onClick={this.setWaterCon}>
@@ -399,19 +401,22 @@ class SideBarExp extends React.Component {
 
 
                         {/* More Button */}
-                        <Link to="/More">
-                            <ListItem className="SideBar_ListItem" button onClick={this.setMore}>
-                                <ListItemIcon>
-                                    {/* Path tag for More icon */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path style={{ "fill": "none" }} d="M0,0H24V24H0Z" />
-                                        <path style={{ "fill": "#fff" }} d="M6,10a2,2,0,1,0,2,2A2.006,2.006,0,0,0,6,10Zm12,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,18,10Zm-6,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Z" /></svg>
-                                    {/* <MoreHoriz /> */}
-                                </ListItemIcon>
-                                {/* Conditional rendering of text */}
-                                {this.text(160, "More")}
-                            </ListItem>
-                        </Link>
+
+                        <ListItem className="SideBar_ListItem" button onClick={this.setMore}>
+                            {/* <Link to="/More"> */}
+                            <ListItemIcon>
+                                {/* Path tag for More icon */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path style={{ "fill": "none" }} d="M0,0H24V24H0Z" />
+                                    <path style={{ "fill": "#fff" }} d="M6,10a2,2,0,1,0,2,2A2.006,2.006,0,0,0,6,10Zm12,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,18,10Zm-6,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Z" /></svg>
+                                {/* <MoreHoriz /> */}
+                            </ListItemIcon>
+
+                            {/* Conditional rendering of text */}
+                            {this.text(160, "More")}
+                            {/* </Link> */}
+                        </ListItem>
+
                     </List>
                     <div className="SideBar_ListImage">
                         <Weather />

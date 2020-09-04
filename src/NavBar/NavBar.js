@@ -4,19 +4,21 @@ import { KeyboardArrowDown } from '@material-ui/icons'
 import { SvgIcon } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import Image_1 from './Image_1.png';
-import { Link, Redirect, Route } from 'react-router-dom';
+import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import watboy_text from './watboy_text.png'
 import CancelIcon from '@material-ui/icons/Cancel';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Cookies from 'js-cookie'
+import Login from '../Pages/Login/Login'
 const NavBar = (props) => {
     const [nar, setNar] = useState(false);
+    const [flag, setFlag] = useState(true)
     const [left, setLeft] = useState('3%')//Depending on whether sidebar is exapnded or not navbar will have different starting position
     const [flex, setFlex] = useState('0.97')//Used to add pace between the heading and the settings icon
     const [show, setShow] = useState(false)
-    var flag = 1
+    //    / var flag = 1
     useEffect(() => {
         if (props.big === true) {//Expanded sidebar
             setNar(true)
@@ -40,39 +42,44 @@ const NavBar = (props) => {
     }
     const logout = () => {
         Cookies.remove('auth');
-        flag = 0
+        setFlag(false)
+        window.location.reload(false);
+        //console.log(flag)
+        //this.props.history.push("/login")
     }
     return (
+
         <div>
-            <header className="toolbar" style={{ left: left }}>
-                {/* Depending on the page heading is passed down to navbar */}
-                <div className="toolbar_pageheading">
-                    {props.heading}
-                </div>
+            {flag && <div>
+                <header className="toolbar" style={{ left: left }}>
+                    {/* Depending on the page heading is passed down to navbar */}
+                    <div className="toolbar_pageheading">
+                        {props.heading}
+                    </div>
 
 
-                {/* Spacing between heading and settings icon */}
-                <div style={{ flex: flex }} />
+                    {/* Spacing between heading and settings icon */}
+                    <div style={{ flex: flex }} />
 
 
-                {/* Settings icon */}
-                <Link to="/Settings">
-                    <div className="toolbar_settingsicon">
-                        {/* Svg path of the settings icon, not to be tampered with */}
-                        {/* <SvgIcon>
+                    {/* Settings icon */}
+                    <Link to="/Settings">
+                        <div className="toolbar_settingsicon">
+                            {/* Svg path of the settings icon, not to be tampered with */}
+                            {/* <SvgIcon>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path style={{ "fill": "#bcbccb" }} d="M14.963,5.85,16.2,3.487,14.625,1.912,12.263,3.15a4.03,4.03,0,0,0-1.238-.45l-.9-2.7H7.875l-.9,2.587a4.7,4.7,0,0,0-1.125.45L3.487,1.8,1.8,3.487,3.038,5.85a4.7,4.7,0,0,0-.45,1.125L0,7.875v2.25l2.587.9c.112.45.338.787.45,1.238L1.8,14.625,3.375,16.2l2.362-1.237a4.03,4.03,0,0,0,1.238.45L7.875,18h2.25l.9-2.588c.45-.113.787-.337,1.238-.45L14.625,16.2,16.2,14.625l-1.237-2.362a4.03,4.03,0,0,0,.45-1.238l2.588-.9V7.875l-2.588-.9A4.7,4.7,0,0,0,14.963,5.85ZM9,12.375A3.315,3.315,0,0,1,5.625,9,3.315,3.315,0,0,1,9,5.625,3.315,3.315,0,0,1,12.375,9,3.315,3.315,0,0,1,9,12.375Z" transform="translate(3 3)" />
                                 <path style={{ "fill": "none" }} d="M0,0H24V24H0Z" /></svg>
                         </SvgIcon> */}
-                        <SettingsIcon />
-                    </div>
-                </Link>
+                            <SettingsIcon />
+                        </div>
+                    </Link>
 
-                {/* Notifications icon */}
-                <div className="toolbar_notificationsicon" onClick={handleClick}>
-                    {/* <SvgIcon> */}
-                    {/* Main svg path */}
-                    {/* <svg width="24" height="25" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    {/* Notifications icon */}
+                    <div className="toolbar_notificationsicon" onClick={handleClick}>
+                        {/* <SvgIcon> */}
+                        {/* Main svg path */}
+                        {/* <svg width="24" height="25" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <path fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 0 0 L 15 0.5 L 13 1 L 12 7 Q 7.3 6 6 9.5 L 6 14.5 L 3 20 L 18.5 20 L 19 18.5 Q 15 17.1 16 12 L 23 11 L 23.5 9 L 24 25 L 0 25 L 0 0 Z M 9 21 Q 8 25 13 23 Q 14 19 9 21 Z "></path>
                             <path fill="rgb(0,0,0)" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 21.5 0 Q 25.3 -1.3 24 2.5 L 23 2.5 Q 23.8 0.3 21.5 1 L 21.5 0 Z "></path>
                             <path fill="rgb(255,192,107)" stroke="rgb(255,192,107)" stroke-width="1" opacity="1" d="M 17.5 2 L 21 3 L 22 6.5 L 21 9 L 17.5 10 L 15 9 L 14 5.5 L 15 3 L 17.5 2 Z "></path>
@@ -85,43 +92,73 @@ const NavBar = (props) => {
                             <path fill="rgb(188,188,203)" stroke="rgb(188,188,203)" stroke-width="1" opacity="1" d="M 9.5 21 L 13 21.5 L 10.5 23 L 9.5 21 Z "></path>
                         </svg>
                     </SvgIcon> */}
-                    <NotificationsIcon> </NotificationsIcon>
-                </div>
-                {/* <Link to="/login"> */}
-                <div className="logout" onClick={logout}>
-                    {/* Svg path of the settings icon, not to be tampered with */}
-                    <ExitToAppIcon></ExitToAppIcon>
-                </div>
-                {/* </Link> */}
+                        <NotificationsIcon> </NotificationsIcon>
+                    </div>
+                    {/* <Link to="/login"> */}
+                    <div className="logout" onClick={logout}>
+                        {/* Svg path of the settings icon, not to be tampered with */}
+                        <ExitToAppIcon></ExitToAppIcon>
+                    </div>
+                    {/* </Link> */}
 
-                {/* Static username and dropdown */}
-                <div className="toolbar_username">
-                    {/* Default username */}
-                    <p className="toolbar_username_text">Ganesh</p>
-                    {/* Arrowdown icon */}
-                    <KeyboardArrowDown className="toolbar_username_drop" />
-                </div>
+                    {/* Static username and dropdown */}
+                    <div className="toolbar_username">
+                        {/* Default username */}
+                        <p className="toolbar_username_text">Ganesh</p>
+                        {/* Arrowdown icon */}
+                        <KeyboardArrowDown className="toolbar_username_drop" />
+                    </div>
 
-                {/* Default image Avatar imported from same folder */}
-                <div className="toolbar_useravatar">
-                    <Avatar alt="Remy Sharp" src={Image_1} />
-                </div>
-            </header>
-            < div className="yash"  >
-                {/* <TextField variant="filled" value="yash  this is the watboy image , checking for overflow" className="textbox" /> */}
-                {show && <textarea id="w3mission" rows="3" cols="30" className="textbox" >yash  this is the watboy image , checking for overflow</textarea>
-                }{/* {this.state.show &&
+                    {/* Default image Avatar imported from same folder */}
+                    <div className="toolbar_useravatar">
+                        <Avatar alt="Remy Sharp" src={Image_1} />
+                    </div>
+                </header>
+                < div className="yash"  >
+                    {/* <TextField variant="filled" value="yash  this is the watboy image , checking for overflow" className="textbox" /> */}
+                    {show && <textarea id="w3mission" rows="3" cols="30" className="textbox" >yash  this is the watboy image ,{{ flag }} checking for overflow</textarea>
+                    }{/* {this.state.show &&
             //<Image src={watboy_text} width="400" height="200" id="name12" ref='image'> </Image>
           } */}
-                {/* {this.state.show && <h4>yash.</h4> */}
-                <CancelIcon className="icon" onClick={closewatboy}></CancelIcon>
-                {show && <img src={watboy_text} width="530" height="200" onClick={imagehandler} ></img>}
-                {/* <input type="text" value="texxtbox" className="textbox"></input> */}
-            </div >
-            {!flag &&
-                < Route exact path="/dashboard">
+                    {/* {this.state.show && <h4>yash.</h4> */}
+                    <CancelIcon className="icon" onClick={closewatboy}></CancelIcon>
+                    {show && <img src={watboy_text} width="530" height="200" onClick={imagehandler} ></img>}
+                    {/* <input type="text" value="texxtbox" className="textbox"></input> */}
+                </div >
+                {/* {!flag && <Switch>
+
+                <Route exact path="/login"
+                    name="Login Page"
+                    render={props => (
+                        <Login {...props}
+                            appCallBack1={this.loginCallBack} />
+                    )} />
+                <Redirect to="/login" />
+            </Switch>
+
+            } */}
+            </div>
+            }
+            {!flag && <Switch>
+                {/* <Redirect to="/login" ></Redirect> */}
+                {/* <Route exact path="/">
+
+                </Route> */}
+                <Route exact path="/login"
+                    name="Login Page"
+                    render={props => (
+                        <Login {...props}
+                            appCallBack1={this.loginCallBack} />
+                    )} />
+                <Route exact path="/:pid">
                     <Redirect to="/login" />
                 </Route>
+            </Switch>
+                // && <Redirect to='/login' name="Login Page"
+                //   render={props => (
+                //     <Login {...props}
+                //       appCallBack1={this.loginCallBack} />
+                //   )} />
             }
         </div >
 

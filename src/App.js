@@ -33,12 +33,14 @@ class App extends React.Component {
       storage: '',
       consumption: '',
       quality: '',
-      auth: ''
+      auth: '',
+      industry: ''
     }
   }
   componentDidMount() {
     var bytes = ''
     var originalText = ''
+    var ind = ''
     if (Cookies.get('auth')) {
       var test = Cookies.get('auth')
       console.log(test)
@@ -48,8 +50,13 @@ class App extends React.Component {
       this.setState({ auth: originalText })
       console.log(originalText)
     }
-
+    if (Cookies.get('industry')) {
+      var ind = Cookies.get('industry')
+      console.log(ind)
+    }
     this.setState({ auth: originalText })
+    this.setState({ industry: ind })
+    console.log(this.state.industry)
     if (!this.state.auth) {
       // /console.log('syash')
       // hashHistory.push('/login')
@@ -67,12 +74,14 @@ class App extends React.Component {
   loginCallBack = (childdata) => {
     // Settings page returns storage,consumption and quality array, this is passed on to each webpage by app.js
     console.log(childdata)
-    this.setState({ auth: childdata })
-    var original = childdata.toString()
+    this.setState({ auth: childdata[0].token, industry: childdata[0].industry_id })
+    console.log(this.state.auth)
+    var original = childdata[0].token.toString()
     console.log(original)
     var ciphertext = CryptoJS.AES.encrypt(original, 'secret key 123').toString();
     console.log(ciphertext);
-    Cookies.set('auth', ciphertext, { expires: 1 });
+    Cookies.set('auth', ciphertext, { expires: 1 / 24 });
+    Cookies.set('industry', this.state.industry, { expires: 1 / 24 })
     console.log('cookie: ' + Cookies.get('auth'))
   }
   render() {
@@ -140,6 +149,7 @@ class App extends React.Component {
                   consumption={this.state.consumption}
                   quality={this.state.quality}
                   auth={this.state.auth}
+                  industry={this.state.industry}
                 />
               )}
             />
@@ -166,9 +176,9 @@ class App extends React.Component {
                 <Login {...props}
                   appCallBack1={this.loginCallBack} />
               )} />
-            {/* <Route exact path="/:pid">
+            <Route exact path="/:pid">
               <Redirect to="/login" />
-            </Route> */}
+            </Route>
           </Switch>
             // && <Redirect to='/login' name="Login Page"
             //   render={props => (
