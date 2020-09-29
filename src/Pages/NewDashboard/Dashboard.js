@@ -41,6 +41,7 @@ class Dashboard extends React.Component {
             date_weekly: [],
             date_monthly: [],
             bar_consumption: [],
+            bar_consumption_daily: [],
             bar_consumption_month: [],
             bar_consumption_weekly: [],
             pie_consumption_daily: [],
@@ -53,6 +54,7 @@ class Dashboard extends React.Component {
             total_storage: 0,
             total_consumption: 0,
             percentage: 1000000,
+            doughnut_total: 100,
             yash: 100,
             total_treated: 380,
             doughnut_data: {
@@ -85,16 +87,16 @@ class Dashboard extends React.Component {
                     }
                 ]
             },
-            options: {
-                plugins: {
-                    labels: {
-                        render: "percentage",
-                        fontColor: 'white',
-                        precision: 2
-                    }
+            // options: {
+            //     plugins: {
+            //         labels: {
+            //             render: "percentage",
+            //             fontColor: 'white',
+            //             precision: 2
+            //         }
 
-                }
-            }
+            //     }
+            // }
         }
         this.doughnut_balance = this.doughnut_balance.bind(this);
         this.barGraph = this.barGraph.bind(this);
@@ -147,7 +149,8 @@ class Dashboard extends React.Component {
         //fetching everyday consumption
         try {
             var i;
-            var date = [];
+            var temp;
+            var date_d = [];
             var test = []
             var bar_consumption = []
             var total_consumption = 0
@@ -169,22 +172,28 @@ class Dashboard extends React.Component {
                     //     total_consumption = total_consumption + bar_consumption[i]
                     // }
                     console.log(bar.data)
+                    // console.log(Object.values(bar.data[0]))
                     var j = bar.data.length - 1
                     for (i = 0; i < bar.data.length; i++) {
-                        console.log(bar.data[i][i + 1 + '.0'].cost)
-                        bar_consumption[j] = bar.data[i][i + 1 + '.0'].cost
+                        //console.log(bar.data[i][i + 1 + '.0'].cost)
+                        temp = JSON.stringify(bar.data[i][i + 1 + '.0'].process_consumption)
+                        //console.log(temp)
+                        bar_consumption[j] = (temp / 1000).toFixed(2);
                         test[j--] = i + 1 + ':00'
+
+                        //date.unshift(Object.values(bar.data[i]))
                     }
-                    console.log(test)
+                    console.log(bar_consumption)
                 }
                 )
-            this.setState({ bar_consumption: bar_consumption, total_consumption: total_consumption, date_daily: test })
+            this.setState({ bar_consumption_daily: bar_consumption, total_consumption: total_consumption, date_daily: test })
             console.log(this.state.bar_consumption)
         } catch (err) {
             console.log(err.message);
         }
         try {
             var i;
+            var date = []
             var date_daily = [];
             var date_monthly = []
             var bar_consumption = []
@@ -211,7 +220,7 @@ class Dashboard extends React.Component {
                     //console.log(bar.data[0])
                     var tempp = bar.data[0]
                     var myJSON = JSON.stringify(tempp);
-                    console.log(myJSON.substring(1, 13))
+                    //console.log(myJSON.substring(1, 13))
                     //console.log(Object.values(bar.data[0]))
                     var j = bar.data.length - 1
                     for (i = 0; i < bar.data.length; i++) {
@@ -229,10 +238,10 @@ class Dashboard extends React.Component {
                     //     date_monthly[j] = myJSON.substring(2, 12)
                     //     date.shift(Object.values(bar.data[j]))
                     // }
-                    console.log(date_monthly)
+                    //console.log(date_monthly)
                     for (i = 0; i < bar.data.length; i++) {
                         //console.log(date[i][0].cost)
-                        bar_consumption.unshift(date[i][0].cost)
+                        bar_consumption.unshift((date[i][0].process_consumption / 1000).toFixed(2));
                         //total_consumption = total_consumption + bar_consumption[i]
                     }
                     // for (i = 0; i < 14; i++) {
@@ -308,7 +317,7 @@ class Dashboard extends React.Component {
                     console.log(date_weekly)
                     for (i = 0; i < bar.data.length; i++) {
                         //console.log(date[i][0].cost)
-                        bar_consumption.unshift(date[i][0].cost)
+                        bar_consumption.unshift((date[i][0].process_consumption / 1000).toFixed(2))
                         //total_consumption = total_consumption + bar_consumption[i]
                     }
                     console.log(bar_consumption)
@@ -408,7 +417,6 @@ class Dashboard extends React.Component {
                     for (i = 0; i < bar.data.length; i++) {
                         category[i] = bar.data[i].category
                         consumption[i] = bar.data[i].cost
-
                     }
                     console.log(category)
                 }
@@ -464,22 +472,23 @@ class Dashboard extends React.Component {
 
 
     //doughnut chart and re-rendering to update values onClick of bar chart
-    doughnut_balance() {
+    async doughnut_balance() {
         var i;
         var date = [];
         var data;
+        var data1 = []
         var labels = [];
+        var total = 1;
         //var data_doughnut = [[130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90]]
         var data_doughnut
         //date array
-        for (i = 0; i < 10; i++) {
-            date.unshift(moment().subtract(i, 'days').format('DD-MM-YYYY'))
-        }
+
         if (this.state.radioSelected === 1) {
             //labels = date
             data = this.state.pie_consumption_daily
             for (i = 0; i < this.state.pie_category_daily.length; i++) {
-                labels[i] = this.state.pie_category_daily[i] + ' ' + this.state.pie_consumption_daily[i]
+                labels[i] = this.state.pie_category_daily[i] + ' ' + (this.state.pie_consumption_daily[i] / 1000).toFixed(2) + ' kL'
+                total += this.state.pie_consumption_daily[i]
                 //console.log('yash')
             }
         }
@@ -487,20 +496,28 @@ class Dashboard extends React.Component {
             //labels = month
             data = this.state.pie_consumption_weekly
             for (i = 0; i < this.state.pie_category_weekly.length; i++) {
-                labels[i] = this.state.pie_category_weekly[i] + ' ' + this.state.pie_consumption_weekly[i]
-                console.log('yash')
+                labels[i] = this.state.pie_category_weekly[i] + ' ' + (this.state.pie_consumption_weekly[i] / 1000).toFixed(2) + ' kL'
+                console.log(this.state.pie_consumption_weekly[i])
+                total += this.state.pie_consumption_weekly[i]
             }
         }
         else {
             //labels = month_10
             //data = [370.6, 450.3, 367.8, 380.6, 370.6, 470.3, 367.8, 380.6, 390.4, 315.4]
             data = this.state.pie_consumption_monthly
-            for (i = 0; i < this.state.pie_category_weekly.length; i++) {
-                labels[i] = this.state.pie_category_weekly[i] + ' ' + this.state.pie_consumption_weekly[i]
-                console.log(this.state.pie_consumption_weekly[i].toString().length)
+            for (i = 0; i < this.state.pie_category_monthly.length; i++) {
+                labels[i] = this.state.pie_category_monthly[i] + ' ' + (this.state.pie_consumption_monthly[i] / 1000.0).toFixed(2) + ' kL'
+                console.log(this.state.pie_consumption_monthly[i])
+                total += this.state.pie_consumption_monthly[i]
             }
         }
+        for (i = 0; i < data.length; i++) {
 
+            data1[i] = data[i] / total;
+            console.log(total)
+        }
+        console.log(data)
+        this.state.doughnut_total = total
         //assigning data of the correct date to doughnut chart 
         // for (i = 0; i < 10; i++) {
         //     if (selected_date === date[i]) {
@@ -521,7 +538,7 @@ class Dashboard extends React.Component {
             labels: labels,
             datasets: [
                 {
-                    data: data,
+                    data: data1,
                     backgroundColor: [
                         '#21748B',
                         '#40A3BF',
@@ -552,6 +569,7 @@ class Dashboard extends React.Component {
         var i = 0;
         var labels;
         var data;
+        var daily_comp = []
         var date = [];
         var month = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; //dummy data for 'this month' option
         var month_10 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October']; //dummy data for 'last 10 months' option
@@ -562,17 +580,16 @@ class Dashboard extends React.Component {
         var borderColor = [];
         var hoverBorderColor = [];
 
-        //x-axis bar graph (dates)
-        for (i = 0; i < 10; i++) {
-            //console.log(date)
-            date.unshift(moment().subtract(i, 'days').format('DD-MM-YYYY'))
+        for (i = 0; i < this.state.bar_consumption_daily.length; i++) {
+            //console.log(this.state.bar_consumption_daily[i])
+            daily_comp[i] = (this.state.bar_consumption_daily[i])
         }
-
+        // console.log(daily_comp)
         //for last 10 days, this month and 10 months options and respective data
         //only last 10 days data is taken from API
         if (this.state.radioSelected === 1) {
             labels = this.state.date_daily
-            data = this.state.bar_consumption
+            data = daily_comp
         }
         else if (this.state.radioSelected === 2) {
             labels = this.state.date_weekly
@@ -622,6 +639,7 @@ class Dashboard extends React.Component {
                     data: data,
                 },
             ],
+
         };
 
         return bar
@@ -635,34 +653,45 @@ class Dashboard extends React.Component {
         var i = 0;
         var date = [];
 
-        //x-axis bar graph (dates)
-        for (i = 0; i < 10; i++) {
-            date.unshift(moment().subtract(i, 'days').format('DD-MM-YYYY'))
-        }
-
         const mainChartOpts = {
 
             //manipulate x-axis and y-axis
             maintainAspectRatio: false,
+            plugins: {
+                datalabels: { display: true, anchor: 'end' },
+            },
             scales: {
+
                 xAxes: [
                     {
-                        barPercentage: 0.5,
+
+                        barPercentage: 1,
                         gridLines: {
                             drawOnChartArea: false,
                         },
-                    }
+                        // layout: {
+                        //     padding: 500,
+                        // },
+
+                        // ticks: {
+                        //     maxRotation: 40,
+                        //     minRotation: 40,
+                        //     padding: 30,
+                        //     // /display: false
+                        // }
+                    },
                 ],
                 yAxes: [
                     {
-                        ticks: {
-                            display: true
-                        },
+                        // ticks: {
+                        //     display: true
+                        // },
                         gridLines: {
                             drawOnChartArea: true,
                             drawBorder: true,
                             display: true
                         },
+
                     }
                 ],
             },
@@ -755,7 +784,7 @@ class Dashboard extends React.Component {
                     <Row>
                         <Col xl={12} sm={12} md={12} lg={12}>
                             <Card>
-                                <CardBody style={{ height: 450 + 'px', marginTop: 100 + 'px' }}>
+                                <CardBody style={{ height: 400 + 'px', marginTop: 100 + 'px' }}>
                                     <Row>
                                         <Col sm="5">
                                             <CardTitle className="mb-0">Consumption</CardTitle>
@@ -772,8 +801,8 @@ class Dashboard extends React.Component {
                                         <br />
                                     </Row>
                                     <hr className="mt-0" />
-                                    <div className="chart-wrapper" style={{ height: 350 }}>
-                                        <Bar data={this.barGraph()} options={this.mainChartOpts()} height={300} />
+                                    <div className="chart-wrapper" style={{ height: 300 }}>
+                                        <Bar data={this.barGraph()} options={this.mainChartOpts()} />
                                     </div>
                                 </CardBody>
                             </Card>
@@ -815,7 +844,7 @@ class Dashboard extends React.Component {
                                                     datalabels: {
                                                         color: '#ffffff',
                                                         formatter: function (value, context) {
-                                                            return ((value / 100000) * 100).toFixed(2) + '%';
+                                                            return ((value) * 100).toFixed(2) + '%';
                                                         }
                                                     }
                                                 }

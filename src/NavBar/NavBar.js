@@ -39,6 +39,7 @@ const NavBar = (props) => {
     }
     const handleClick = () => {
         setShow(true)
+        console.log('Aniu')
     }
     const logout = () => {
         Cookies.remove('auth');
@@ -116,10 +117,8 @@ const NavBar = (props) => {
                 </header>
                 < div className="yash"  >
                     {/* <TextField variant="filled" value="yash  this is the watboy image , checking for overflow" className="textbox" /> */}
-                    {show && <textarea id="w3mission" rows="3" cols="30" className="textbox" >yash  this is the watboy image ,{{ flag }} checking for overflow</textarea>
-                    }{/* {this.state.show &&
-            //<Image src={watboy_text} width="400" height="200" id="name12" ref='image'> </Image>
-          } */}
+                    {show && <div><textarea id="w3mission" rows="3" cols="30" className="textbox" >yash  this is the watboy image checking for overflow</textarea>
+                    </div>}
                     {/* {this.state.show && <h4>yash.</h4> */}
                     <CancelIcon className="icon" onClick={closewatboy}></CancelIcon>
                     {show && <img src={watboy_text} width="530" height="200" onClick={imagehandler} ></img>}

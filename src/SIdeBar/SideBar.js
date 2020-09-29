@@ -401,21 +401,22 @@ class SideBarExp extends React.Component {
 
 
                         {/* More Button */}
+                        <Link to="/More">
+                            <ListItem className="SideBar_ListItem" button onClick={this.setMore}>
 
-                        <ListItem className="SideBar_ListItem" button onClick={this.setMore}>
-                            {/* <Link to="/More"> */}
-                            <ListItemIcon>
-                                {/* Path tag for More icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path style={{ "fill": "none" }} d="M0,0H24V24H0Z" />
-                                    <path style={{ "fill": "#fff" }} d="M6,10a2,2,0,1,0,2,2A2.006,2.006,0,0,0,6,10Zm12,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,18,10Zm-6,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Z" /></svg>
-                                {/* <MoreHoriz /> */}
-                            </ListItemIcon>
+                                <ListItemIcon>
+                                    {/* Path tag for More icon */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path style={{ "fill": "none" }} d="M0,0H24V24H0Z" />
+                                        <path style={{ "fill": "#fff" }} d="M6,10a2,2,0,1,0,2,2A2.006,2.006,0,0,0,6,10Zm12,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,18,10Zm-6,0a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Z" /></svg>
+                                    {/* <MoreHoriz /> */}
+                                </ListItemIcon>
 
-                            {/* Conditional rendering of text */}
-                            {this.text(160, "More")}
-                            {/* </Link> */}
-                        </ListItem>
+                                {/* Conditional rendering of text */}
+                                {this.text(160, "More")}
+
+                            </ListItem>
+                        </Link>
 
                     </List>
                     <div className="SideBar_ListImage">
