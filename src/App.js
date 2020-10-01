@@ -139,6 +139,8 @@ class App extends React.Component {
                   storage={this.state.storage}
                   consumption={this.state.consumption}
                   quality={this.state.quality}
+                  auth={this.state.auth}
+                  industry={this.state.industry}
                 />
               )}
             />

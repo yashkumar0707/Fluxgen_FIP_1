@@ -108,7 +108,7 @@ class Sump extends React.Component {
     getfromApi = async () => {
         let myheaders = {
             //setting the auth header/token
-            "authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA0MDMxNTgsInB1YmxpY19pZCI6IjdlZGY4NGY0LTcyMmItNDc5YS04ZjZlLWJiMjczY2YxMzQ0ZSJ9.nBB19lijTPRPiZnYx2ymFF4YRAVbPCPR838VSFf0Z0Y"
+            "authorization": this.props.auth
         }
         try {
             var cost = 0
@@ -116,7 +116,7 @@ class Sump extends React.Component {
             var tanks = []
             var tank_name = []
             //fetching from the api
-            await fetch(`https://api.fluxgen.in/aquagen/v1/industries/DEMO1/consumption/latest?category=Storage`, {
+            await fetch('https://api.fluxgen.in/aquagen/v1/industries/' + this.props.industry + '/consumption/latest?category=Storage', {
                 method: 'GET',
                 headers: myheaders
             })
