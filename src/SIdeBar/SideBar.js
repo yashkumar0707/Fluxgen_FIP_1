@@ -126,7 +126,7 @@ class SideBarExp extends React.Component {
         }
         this.setState(newState)
         console.log(this.state)
-        this.props.activeState("Storage")
+        //this.props.activeState("Storage")
         // Sets the water_res variable in state to true and the others to false, sends Water Reservoir as heading to app.js to add to navbar
 
     }
@@ -360,21 +360,23 @@ class SideBarExp extends React.Component {
 
 
                         {/* Water Reservoir Button */}
+                        <Link to="/Storage/Sump">
+                            <ListItem className="SideBar_ListItem" button onClick={this.setWaterRes}>
+                                <ListItemIcon className="SideBar_ListItemIcon">
+                                    <SvgIcon>
+                                        {/* Path tag for Storage icon */}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path style={{ fill: "none" }} d="M0,0H24V24H0Z" /><g transform="translate(-3 -2)">
+                                                <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M299,1247l-5,5v5l-3,12h16l-3-12v-5Z" transform="translate(-284 -1244)" />
+                                                <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M293,1257h14" transform="translate(-285 -1244)" />
+                                                <path style={{ fill: "none", stroke: "#fff" }} d="M293,1261h12" transform="translate(-284 -1244)" />
+                                                <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M288,1269h22" transform="translate(-284 -1244)" /></g></svg>
+                                    </SvgIcon>
+                                </ListItemIcon>
 
-                        <ListItem className="SideBar_ListItem" button onClick={this.setWaterRes}>
-                            <ListItemIcon className="SideBar_ListItemIcon">
-                                <SvgIcon>
-                                    {/* Path tag for Storage icon */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path style={{ fill: "none" }} d="M0,0H24V24H0Z" /><g transform="translate(-3 -2)">
-                                            <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M299,1247l-5,5v5l-3,12h16l-3-12v-5Z" transform="translate(-284 -1244)" />
-                                            <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M293,1257h14" transform="translate(-285 -1244)" />
-                                            <path style={{ fill: "none", stroke: "#fff" }} d="M293,1261h12" transform="translate(-284 -1244)" />
-                                            <path style={{ fill: "none", stroke: "#fff", "stroke-linecap": "round" }} d="M288,1269h22" transform="translate(-284 -1244)" /></g></svg>
-                                </SvgIcon>
-                            </ListItemIcon>
-                            {this.text(160, "Storage")}
-                        </ListItem>
+                                {this.text(160, "Storage")}
+                            </ListItem>
+                        </Link>
                         <Collapse in={this.state.water_res} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {/* Conditional rendering of options based on active state in settings page */}
@@ -429,7 +431,7 @@ class SideBarExp extends React.Component {
                     onClick={this.props.arrowClick}
                     className="Arrow"
                     button />
-            </MuiThemeProvider>
+            </MuiThemeProvider >
         )
     }
 }
