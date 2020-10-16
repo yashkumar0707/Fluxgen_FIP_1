@@ -16,6 +16,7 @@ class Login extends Component {
 
   //handle clicking on 'Login' button
   handleClick = e => {
+    console.log('yashhsyhay')
     let base64 = require('base-64');
     //getting value of email and password
     var email = document.getElementById("email").value;
@@ -97,7 +98,7 @@ class Login extends Component {
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4" onClick={this.handleClick}>Login</Button>
+                        <Button color="primary" className="px-4" onClick={this.handleClick} onKeyPress={this.handleClick}>Login</Button>
                       </Col>
                       <Col xs="6" className="text-right">
                         <Link to="/forgotpassword">
