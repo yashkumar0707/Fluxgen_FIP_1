@@ -630,14 +630,28 @@ class Dashboard extends React.Component {
             labels: labels,
             datasets: [
                 {
-                    label: 'Kiloliters',
-                    backgroundColor: backgroundColor,
+                    label: 'Critical',
+                    backgroundColor: 'rgb(255, 153, 128)',
                     borderColor: borderColor,
                     borderWidth: 1,
                     hoverBackgroundColor: hoverBackgroundColor,
                     hoverBorderColor: hoverBorderColor,
                     data: data,
                 },
+                {
+                    label: 'Normal',
+                    backgroundColor: 'rgba(204, 230, 255)',
+                    borderColor: 'rgb(51, 156, 255, 0.4)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgb(51, 156, 255, 0.4)',
+                    hoverBorderColor: hoverBorderColor,
+                    data: data,
+                },
+                // {
+                //     label: 'All values are in Kiloliters',
+                //     align: 'end',
+                //     position: 'right'
+                // }
             ],
 
         };
@@ -786,22 +800,26 @@ class Dashboard extends React.Component {
                             <Card>
                                 <CardBody style={{ height: 400 + 'px', marginTop: 100 + 'px' }}>
                                     <Row>
-                                        <Col sm="5">
+                                        <Col sm="10">
                                             <CardTitle className="mb-0">Consumption</CardTitle>
                                         </Col>
-                                        <Col />
-                                        <Col>
+                                        <Col sm="2">
                                             <Row>
-                                                <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Daily</Button>
-                                                <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Weekly</Button>
-                                                <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(3)} active={this.state.radioSelected === 3}>Monthly</Button>
+                                                <div style={{ textAlign: 'right' }}>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Daily</Button>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Weekly</Button>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(3)} active={this.state.radioSelected === 3}>Monthly</Button>
+                                                    <p style={{ textAlign: 'right' }}>All values are in Kiloliters</p>
+                                                </div>
                                             </Row>
                                         </Col>
                                         <br />
                                         <br />
                                     </Row>
                                     <hr className="mt-0" />
+
                                     <div className="chart-wrapper" style={{ height: 300 }}>
+
                                         <Bar data={this.barGraph()} options={this.mainChartOpts()} />
                                     </div>
                                 </CardBody>

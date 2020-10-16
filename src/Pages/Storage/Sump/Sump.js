@@ -196,11 +196,12 @@ class Sump extends React.Component {
         for (var i = 0; i < this.state.tanks.length; i = i + 2) {
             items.push(
                 <Row>
-                    <Col xl={6} sm={12} md={12}>
+                    <Col lg={6} sm={6} md={6}>
                         <Card className="text-center">
+
                             <ReactFC
                                 type="cylinder"
-                                width="400"
+                                width="200"
                                 height="300"
                                 dataFormat="JSON"
                                 dataSource={{
@@ -217,7 +218,7 @@ class Sump extends React.Component {
                                         width: "400",
                                         showTickMarks: 1,
                                         showLimits: 1,
-                                        cylRadius: 100,
+                                        cylRadius: 60,
                                         theme: "fusion"
                                     },
                                     value: this.state.tanks[i]
@@ -225,11 +226,12 @@ class Sump extends React.Component {
                             />
                         </Card>
                     </Col>
-                    <Col xl={6} sm={12} md={12}>
+                    <Col lg={6} sm={6} md={6}>
                         <Card className="text-center">
+
                             <ReactFC
                                 type="cylinder"
-                                width="400"
+                                width="200"
                                 height="300"
                                 dataFormat="JSON"
                                 dataSource={{
@@ -246,7 +248,7 @@ class Sump extends React.Component {
                                         width: "400",
                                         showTickMarks: 1,
                                         showLimits: 1,
-                                        cylRadius: 100,
+                                        cylRadius: 60,
                                         theme: "fusion"
                                     },
                                     value: this.state.tanks[i + 1]
@@ -276,7 +278,7 @@ class Sump extends React.Component {
                     </NavBar> */}
                     <Row style={{ marginTop: "100px", marginLeft: this.state.sidewidth }}>
 
-                        <Col xl={5} sm={12} md={12} lg={12}>
+                        <Col xl={6} sm={12} md={12} lg={12}>
                             <Card className="text-center">
                                 <ReactFC
                                     type="cylinder"
