@@ -13,7 +13,11 @@ class Login extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
-
+  handleCheck = (event) => {
+    if (event.key == 'Enter') {
+      this.handleClick()
+    }
+  }
   //handle clicking on 'Login' button
   handleClick = e => {
     console.log('yashhsyhay')
@@ -94,11 +98,11 @@ class Login extends Component {
                           <i className="icon-lock"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Password" autoComplete="current-password" id="password" style={{ borderColor: "green" }} />
+                      <Input type="password" placeholder="Password" onKeyPress={this.handleCheck} autoComplete="current-password" id="password" style={{ borderColor: "green" }} />
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4" onClick={this.handleClick} onKeyPress={this.handleClick}>Login</Button>
+                        <Button color="primary" className="px-4" onClick={this.handleClick}>Login</Button>
                       </Col>
                       <Col xs="6" className="text-right">
                         <Link to="/forgotpassword">

@@ -573,7 +573,7 @@ class Dashboard extends React.Component {
         var date = [];
         var month = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; //dummy data for 'this month' option
         var month_10 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October']; //dummy data for 'last 10 months' option
-        var greatest;
+        var greatest = 0;
         var indexOfGreatest;
         var backgroundColor = [];
         var hoverBackgroundColor = [];
@@ -601,9 +601,62 @@ class Dashboard extends React.Component {
             data = this.state.bar_consumption_month
         }
 
+        // //obtain index of highest bar
+        // for (i = 0; i < data.length; i++) {
+        //     if (data[i] > greatest) {
+        //         console.log(data[i], greatest)
+        //         greatest = data[i];
+        //         indexOfGreatest = i;
+        //     }
+        // }
+        // console.log(greatest)
+        // let test = data[indexOfGreatest]
+        // //to change the colour of the highest bar
+        // for (i = 0; i < data.length; i++) {
+        //     if (i === 5) {
+        //         backgroundColor.push('rgb(255, 153, 128)')
+        //         hoverBackgroundColor.push('rgb(255, 92, 51, 0.4)')
+        //         borderColor.push('rgb(255, 92, 51)')
+        //         hoverBorderColor.push('rgb(255, 92, 51)')
+        //     }
+        //     else {
+        //         backgroundColor.push('rgba(204, 230, 255)')
+        //         hoverBackgroundColor.push('rgb(51, 156, 255, 0.4)')
+        //         borderColor.push('rgba(51, 156, 255)')
+        //         hoverBorderColor.push('rgb(51, 156, 255)')
+        //     }
+        // }
+
+        // //original bar graph code
+        // const bar = {
+        //     labels: labels,
+        //     datasets: [
+        //         // {
+        //         //     label: 'Critical',
+        //         //     backgroundColor: 'rgb(255, 153, 128)',
+        //         //     borderColor: borderColor,
+        //         //     borderWidth: 1,
+        //         //     hoverBackgroundColor: hoverBackgroundColor,
+        //         //     hoverBorderColor: hoverBorderColor,
+        //         //     //data: test,
+        //         // },
+        //         {
+        //             label: 'Critical',
+        //             backgroundColor: 'rgba(204, 230, 255)',
+        //             borderColor: 'rgb(51, 156, 255, 0.4)',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'rgb(51, 156, 255, 0.4)',
+        //             hoverBorderColor: hoverBorderColor,
+        //             data: data,
+        //         },
+        //     ],
+
+        // };
+
         //obtain index of highest bar
         for (i = 0; i < data.length; i++) {
-            if (!greatest || data[i] > greatest) {
+            if (!greatest || parseFloat(data[i]) > greatest) {
+                console.log(typeof (data[i]), greatest)
                 greatest = data[i];
                 indexOfGreatest = i;
             }
@@ -630,31 +683,22 @@ class Dashboard extends React.Component {
             labels: labels,
             datasets: [
                 {
-                    label: 'Critical',
-                    backgroundColor: 'rgb(255, 153, 128)',
+                    label: 'Kiloliters',
+                    backgroundColor: backgroundColor,
                     borderColor: borderColor,
                     borderWidth: 1,
                     hoverBackgroundColor: hoverBackgroundColor,
                     hoverBorderColor: hoverBorderColor,
                     data: data,
                 },
-                {
-                    label: 'Normal',
-                    backgroundColor: 'rgba(204, 230, 255)',
-                    borderColor: 'rgb(51, 156, 255, 0.4)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgb(51, 156, 255, 0.4)',
-                    hoverBorderColor: hoverBorderColor,
-                    data: data,
-                },
                 // {
-                //     label: 'All values are in Kiloliters',
-                //     align: 'end',
-                //     position: 'right'
+                //     label: 'Kilolit',
                 // }
+
             ],
 
         };
+
 
         return bar
 
