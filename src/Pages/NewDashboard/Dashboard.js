@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SideBarExp from '../../SIdeBar/SideBar';
 import SideBarmin from '../../SideBarMin/SideBarmin';
 import NavBar from '../../NavBar/NavBar';
-//import { Button } from '@material-ui/core';
+import { } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -14,6 +14,7 @@ import {
     Col,
     Row,
     CardFooter,
+    ButtonGroup
 
 } from 'reactstrap';
 
@@ -31,7 +32,7 @@ class Dashboard extends React.Component {
         //this.props.activeState("Dashboard")
         this.state = {
             sidebarexp: true, //Set to true when the expanded sidear is desired and false is collapsed sidebar is wanted
-            sidewidth: '18.05%',//Initial width of expanded sidebar 
+            sidewidth: '19.05%',//Initial width of expanded sidebar 
             activePage: 'Home',//Heading in the navbar
             activeState: 'Home',
             radioSelected: 1,
@@ -109,13 +110,13 @@ class Dashboard extends React.Component {
         this.setState((prevState) => {
             return { sidebarexp: !prevState.sidebarexp }
         })
-        if (this.state.sidewidth == "18.05%") {
+        if (this.state.sidewidth == "19.05%") {
             console.log('yash')
             this.state.sidewidth = "5%"
         }
         else if (this.state.sidewidth == "5%") {
             console.log('yash')
-            this.state.sidewidth = "18.05%"
+            this.state.sidewidth = "19.05%"
         }
         console.log(this.state.sidewidth + 'a')//To test width change
     }
@@ -838,17 +839,111 @@ class Dashboard extends React.Component {
                         {/* All page content oges in this div */}
                     </div>
                 </div>
-                <div className="animated fadeIn" style={{ marginLeft: this.state.sidewidth }}>
+
+                <div className="animated fadeIn" style={{ marginLeft: this.state.sidewidth, marginTop: 100 }}>
+                    <Row>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs="12" sm="6" lg="3">
+                            <Card className="text-black bg-secondary text-center">
+                                <CardBody className="pb-0">
+                                    <div className="text-value">Daily</div>
+                                    <div className="text-value">3000</div>
+                                    <div>Water Consumption (Litres)</div>
+                                    <br />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col xl={12} sm={12} md={12} lg={12}>
                             <Card>
-                                <CardBody style={{ height: 400 + 'px', marginTop: 100 + 'px' }}>
+                                <CardBody style={{}}>
                                     <Row>
                                         <Col sm="10">
                                             <CardTitle className="mb-0">Consumption</CardTitle>
                                         </Col>
                                         <Col sm="2">
                                             <Row>
+                                                {/* <div class="card bg-light mb-3" style="max-width: 20rem;">
+                                                    <div class="card-header">Header</div>
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Light card title</h4>
+                                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                    </div>
+                                                </div> */}
                                                 <div style={{ textAlign: 'right' }}>
                                                     <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Daily</Button>
                                                     <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Weekly</Button>
