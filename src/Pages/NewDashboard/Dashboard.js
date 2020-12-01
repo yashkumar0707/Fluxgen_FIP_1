@@ -841,9 +841,10 @@ class Dashboard extends React.Component {
                 </div>
 
                 <div className="animated fadeIn" style={{ marginLeft: this.state.sidewidth, marginTop: 100 }}>
+                    <h4>Source</h4>
                     <Row>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -854,7 +855,7 @@ class Dashboard extends React.Component {
                         </Col>
 
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -864,7 +865,7 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -874,7 +875,7 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -884,9 +885,10 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <h4>Consumption</h4>
                     <Row>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-warning text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -897,7 +899,7 @@ class Dashboard extends React.Component {
                         </Col>
 
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-warning text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -907,7 +909,7 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-warning text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
@@ -917,7 +919,7 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                         <Col xs="12" sm="6" lg="3">
-                            <Card className="text-black bg-secondary text-center">
+                            <Card className="text-black bg-warning text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
                                     <div className="text-value">3000</div>
