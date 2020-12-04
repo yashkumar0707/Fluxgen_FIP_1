@@ -45,6 +45,10 @@ class Dashboard extends React.Component {
             bar_consumption_daily: [],
             bar_consumption_month: [],
             bar_consumption_weekly: [],
+            bar_source: [],
+            bar_source_daily: [],
+            bar_source_month: [],
+            bar_source_weekly: [],
             pie_consumption_daily: [],
             pie_consumption_weekly: [],
             pie_consumption_monthly: [],
@@ -704,7 +708,145 @@ class Dashboard extends React.Component {
         return bar
 
     };
+    barGraphSource = () => {
 
+        var i = 0;
+        var labels;
+        var data;
+        var daily_comp = []
+        var date = [];
+        var month = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; //dummy data for 'this month' option
+        var month_10 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October']; //dummy data for 'last 10 months' option
+        var greatest = 0;
+        var indexOfGreatest;
+        var backgroundColor = [];
+        var hoverBackgroundColor = [];
+        var borderColor = [];
+        var hoverBorderColor = [];
+
+        for (i = 0; i < this.state.bar_consumption_daily.length; i++) {
+            //console.log(this.state.bar_consumption_daily[i])
+            daily_comp[i] = (this.state.bar_source_daily[i])
+        }
+        // console.log(daily_comp)
+        //for last 10 days, this month and 10 months options and respective data
+        //only last 10 days data is taken from API
+        if (this.state.radioSelected === 1) {
+            labels = this.state.date_daily
+            data = daily_comp
+        }
+        else if (this.state.radioSelected === 2) {
+            labels = this.state.date_weekly
+            data = this.state.bar_source_weekly
+        }
+        else {
+            labels = this.state.date_monthly
+            //data = [370.6, 450.3, 367.8, 380.6, 370.6, 470.3, 367.8, 380.6, 390.4, 315.4]
+            data = this.state.bar_source_month
+        }
+
+        // //obtain index of highest bar
+        // for (i = 0; i < data.length; i++) {
+        //     if (data[i] > greatest) {
+        //         console.log(data[i], greatest)
+        //         greatest = data[i];
+        //         indexOfGreatest = i;
+        //     }
+        // }
+        // console.log(greatest)
+        // let test = data[indexOfGreatest]
+        // //to change the colour of the highest bar
+        // for (i = 0; i < data.length; i++) {
+        //     if (i === 5) {
+        //         backgroundColor.push('rgb(255, 153, 128)')
+        //         hoverBackgroundColor.push('rgb(255, 92, 51, 0.4)')
+        //         borderColor.push('rgb(255, 92, 51)')
+        //         hoverBorderColor.push('rgb(255, 92, 51)')
+        //     }
+        //     else {
+        //         backgroundColor.push('rgba(204, 230, 255)')
+        //         hoverBackgroundColor.push('rgb(51, 156, 255, 0.4)')
+        //         borderColor.push('rgba(51, 156, 255)')
+        //         hoverBorderColor.push('rgb(51, 156, 255)')
+        //     }
+        // }
+
+        // //original bar graph code
+        // const bar = {
+        //     labels: labels,
+        //     datasets: [
+        //         // {
+        //         //     label: 'Critical',
+        //         //     backgroundColor: 'rgb(255, 153, 128)',
+        //         //     borderColor: borderColor,
+        //         //     borderWidth: 1,
+        //         //     hoverBackgroundColor: hoverBackgroundColor,
+        //         //     hoverBorderColor: hoverBorderColor,
+        //         //     //data: test,
+        //         // },
+        //         {
+        //             label: 'Critical',
+        //             backgroundColor: 'rgba(204, 230, 255)',
+        //             borderColor: 'rgb(51, 156, 255, 0.4)',
+        //             borderWidth: 1,
+        //             hoverBackgroundColor: 'rgb(51, 156, 255, 0.4)',
+        //             hoverBorderColor: hoverBorderColor,
+        //             data: data,
+        //         },
+        //     ],
+
+        // };
+
+        //obtain index of highest bar
+        for (i = 0; i < data.length; i++) {
+            if (!greatest || parseFloat(data[i]) > greatest) {
+                console.log(typeof (data[i]), greatest)
+                greatest = data[i];
+                indexOfGreatest = i;
+            }
+        }
+
+        //to change the colour of the highest bar
+        for (i = 0; i < data.length; i++) {
+            if (i === indexOfGreatest) {
+                backgroundColor.push('rgb(255, 153, 128)')
+                hoverBackgroundColor.push('rgb(255, 92, 51, 0.4)')
+                borderColor.push('rgb(255, 92, 51)')
+                hoverBorderColor.push('rgb(255, 92, 51)')
+            }
+            else {
+                backgroundColor.push('rgba(204, 230, 255)')
+                hoverBackgroundColor.push('rgb(51, 156, 255, 0.4)')
+                borderColor.push('rgba(51, 156, 255)')
+                hoverBorderColor.push('rgb(51, 156, 255)')
+            }
+        }
+
+        //original bar graph code
+        const bar = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Kiloliters',
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 1,
+                    hoverBackgroundColor: hoverBackgroundColor,
+                    hoverBorderColor: hoverBorderColor,
+                    data: data,
+                },
+                // {
+                //     label: 'Kilolit',
+                // }
+
+            ],
+
+        };
+
+
+        return bar
+
+    };
 
     //options for bar chart
     mainChartOpts = () => {
@@ -962,6 +1104,44 @@ class Dashboard extends React.Component {
                                     <div className="chart-wrapper" style={{ height: 300 }}>
 
                                         <Bar data={this.barGraph()} options={this.mainChartOpts()} />
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xl={12} sm={12} md={12} lg={12}>
+                            <Card>
+                                <CardBody style={{}}>
+                                    <Row>
+                                        <Col sm="10">
+                                            <CardTitle className="mb-0">Source</CardTitle>
+                                        </Col>
+                                        <Col sm="2">
+                                            <Row>
+                                                {/* <div class="card bg-light mb-3" style="max-width: 20rem;">
+                                                    <div class="card-header">Header</div>
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Light card title</h4>
+                                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                    </div>
+                                                </div> */}
+                                                <div style={{ textAlign: 'right' }}>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Daily</Button>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Weekly</Button>
+                                                    <Button className="btn-pill" style={{ fontSize: '10px' }} size="sm" color="ghost-info" onClick={() => this.onRadioBtnClick(3)} active={this.state.radioSelected === 3}>Monthly</Button>
+                                                    <p style={{ textAlign: 'right' }}>All values are in Kiloliters</p>
+                                                </div>
+                                            </Row>
+                                        </Col>
+                                        <br />
+                                        <br />
+                                    </Row>
+                                    <hr className="mt-0" />
+
+                                    <div className="chart-wrapper" style={{ height: 300 }}>
+
+                                        <Bar data={this.barGraphSource()} options={this.mainChartOpts()} />
                                     </div>
                                 </CardBody>
                             </Card>
