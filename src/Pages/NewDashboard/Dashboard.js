@@ -43,8 +43,11 @@ class Dashboard extends React.Component {
             date_monthly: [],
             bar_consumption: [],
             bar_consumption_daily: [],
+            bar_consumption_daily_total: 0,
             bar_consumption_month: [],
+            bar_consumption_month_total: 0,
             bar_consumption_weekly: [],
+            bar_consumption_weekly_total: 0,
             bar_source: [],
             bar_source_daily: [],
             bar_source_month: [],
@@ -174,7 +177,7 @@ class Dashboard extends React.Component {
                     // }
                     // for (i = 0; i < 10; i++) {
                     //     bar_consumption.unshift(date[i][0].process_consumption / 1000)
-                    //     total_consumption = total_consumption + bar_consumption[i]
+                    //     
                     // }
                     console.log(bar.data)
                     // console.log(Object.values(bar.data[0]))
@@ -184,14 +187,16 @@ class Dashboard extends React.Component {
                         temp = JSON.stringify(bar.data[i][i + 1 + '.0'].process_consumption)
                         //console.log(temp)
                         bar_consumption[j] = (temp / 1000).toFixed(2);
+                        console.log(typeof (total_consumption), typeof (bar_consumption[j]))
+                        total_consumption = parseFloat(total_consumption) + parseFloat(bar_consumption[j])
                         test[j--] = i + 1 + ':00'
 
                         //date.unshift(Object.values(bar.data[i]))
                     }
-                    console.log(bar_consumption)
+                    console.log(total_consumption)
                 }
                 )
-            this.setState({ bar_consumption_daily: bar_consumption, total_consumption: total_consumption, date_daily: test })
+            this.setState({ bar_consumption_daily: bar_consumption, bar_consumption_daily_total: total_consumption, date_daily: test })
             console.log(this.state.bar_consumption)
         } catch (err) {
             console.log(err.message);
@@ -247,16 +252,16 @@ class Dashboard extends React.Component {
                     for (i = 0; i < bar.data.length; i++) {
                         //console.log(date[i][0].cost)
                         bar_consumption.unshift((date[i][0].process_consumption / 1000).toFixed(2));
-                        //total_consumption = total_consumption + bar_consumption[i]
+                        total_consumption = parseFloat(total_consumption) + parseFloat(bar_consumption[i])
                     }
                     // for (i = 0; i < 14; i++) {
                     //     console.log(bar.data[i][i + 1 + '.0'].cost)
                     //     bar_consumption[i] = bar.data[i][i + 1 + '.0'].cost + i
                     // }
-                    console.log(bar_consumption)
+                    //console.log(total_consumption)
                 }
                 )
-            this.setState({ bar_consumption_month: bar_consumption, total_consumption: total_consumption, date_monthly: date_monthly })
+            this.setState({ bar_consumption_month: bar_consumption, bar_consumption_month_total: total_consumption.toFixed(2), date_monthly: date_monthly })
         } catch (err) {
             console.log(err.message);
         }
@@ -323,12 +328,12 @@ class Dashboard extends React.Component {
                     for (i = 0; i < bar.data.length; i++) {
                         //console.log(date[i][0].cost)
                         bar_consumption.unshift((date[i][0].process_consumption / 1000).toFixed(2))
-                        //total_consumption = total_consumption + bar_consumption[i]
+                        total_consumption = parseFloat(total_consumption) + parseFloat(bar_consumption[i])
                     }
-                    console.log(bar_consumption)
+                    console.log(total_consumption)
                 }
                 )
-            this.setState({ bar_consumption_weekly: bar_consumption, date_weekly: date_weekly })
+            this.setState({ bar_consumption_weekly: bar_consumption, date_weekly: date_weekly, bar_consumption_weekly_total: total_consumption.toFixed(2) })
         } catch (err) {
             console.log(err.message);
         }
@@ -487,7 +492,7 @@ class Dashboard extends React.Component {
         //var data_doughnut = [[130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90], [130, 200, 240, 100, 180], [260, 190, 130, 175, 90]]
         var data_doughnut
         //date array
-
+        console.log(this.state.bar_consumption_month_total)
         if (this.state.radioSelected === 1) {
             //labels = date
             data = this.state.pie_consumption_daily
@@ -502,7 +507,7 @@ class Dashboard extends React.Component {
             data = this.state.pie_consumption_weekly
             for (i = 0; i < this.state.pie_category_weekly.length; i++) {
                 labels[i] = this.state.pie_category_weekly[i] + ' ' + (this.state.pie_consumption_weekly[i] / 1000).toFixed(2) + ' kL'
-                console.log(this.state.pie_consumption_weekly[i])
+                //console.log(this.state.pie_consumption_weekly[i])
                 total += this.state.pie_consumption_weekly[i]
             }
         }
@@ -661,7 +666,7 @@ class Dashboard extends React.Component {
         //obtain index of highest bar
         for (i = 0; i < data.length; i++) {
             if (!greatest || parseFloat(data[i]) > greatest) {
-                console.log(typeof (data[i]), greatest)
+                //console.log(typeof (data[i]), greatest)
                 greatest = data[i];
                 indexOfGreatest = i;
             }
@@ -800,7 +805,7 @@ class Dashboard extends React.Component {
         //obtain index of highest bar
         for (i = 0; i < data.length; i++) {
             if (!greatest || parseFloat(data[i]) > greatest) {
-                console.log(typeof (data[i]), greatest)
+                //console.log(typeof (data[i]), greatest)
                 greatest = data[i];
                 indexOfGreatest = i;
             }
@@ -989,7 +994,7 @@ class Dashboard extends React.Component {
                             <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
                                     <div className="text-value">Daily</div>
-                                    <div className="text-value">3000</div>
+                                    <div className="text-value">{this.state.bar_consumption_daily_total}</div>
                                     <div>Water Consumption (Litres)</div>
                                     <br />
                                 </CardBody>
@@ -999,8 +1004,8 @@ class Dashboard extends React.Component {
                         <Col xs="12" sm="6" lg="3">
                             <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
-                                    <div className="text-value">Daily</div>
-                                    <div className="text-value">3000</div>
+                                    <div className="text-value">Weekly</div>
+                                    <div className="text-value">{this.state.bar_consumption_weekly_total}</div>
                                     <div>Water Consumption (Litres)</div>
                                     <br />
                                 </CardBody>
@@ -1009,8 +1014,8 @@ class Dashboard extends React.Component {
                         <Col xs="12" sm="6" lg="3">
                             <Card className="text-black bg-info text-center">
                                 <CardBody className="pb-0">
-                                    <div className="text-value">Daily</div>
-                                    <div className="text-value">3000</div>
+                                    <div className="text-value">Monthly</div>
+                                    <div className="text-value">{this.state.bar_consumption_month_total}</div>
                                     <div>Water Consumption (Litres)</div>
                                     <br />
                                 </CardBody>
