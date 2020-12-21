@@ -73,7 +73,7 @@ class More extends React.Component {
             //Token is added here
             "authorization": this.props.auth
         }
-        //this.state.data.push({ index: "oho", guid: "1" })
+        // this.state.data.push({ index: "oho", guid: "1" })
         var categories = []
         console.log("auth: " + this.props.auth)
         try {
@@ -181,7 +181,7 @@ class More extends React.Component {
             console.log(err.message);
         }
 
-        console.log(this.state.unit_value_total, this.state.pdf_data)
+        console.log(this.state.unit_value_total, this.state.data)
     }
 
     render() {
@@ -231,7 +231,7 @@ class More extends React.Component {
                         style={this.state.style}
                         text={this.state.text}
                     />
-                    {this.state.categories}
+
                 </div>
             </div>
         )
