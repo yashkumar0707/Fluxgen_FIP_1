@@ -9,7 +9,11 @@ import {
     JsonToCsv,
     useJsonToCsv
 } from 'react-json-csv';
+// npm i jspdf
+import jsPDF from 'jspdf'
 
+// npm i jspdf-autotable
+import 'jspdf-autotable';
 class More extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +41,8 @@ class More extends React.Component {
                 // { index: "oho", guid: '1' },
                 // { index: "oho", guid: '1' }
             ],
-            text: "Convert Json to Csv"
+            text: "Convert Json to Csv",
+            array1: [{ c1: "yash", c2: "yash", c3: "yash" }, { c2: "yash" }, "yash"]
         }
 
     }
@@ -183,7 +188,98 @@ class More extends React.Component {
 
         console.log(this.state.unit_value_total, this.state.data)
     }
+    jsPdfGenerator = () => {
 
+        // Example From https://parall.ax/products/jspdf
+        let data = [];
+        let col = [
+            { dataKey: 'count', header: 'Count' },
+            { dataKey: 'c1', header: 'Units' },
+            { dataKey: 'c2', header: 'Consumption' },
+            // { dataKey: 'c3', header: 'C3' },
+            // { dataKey: 'c4', header: 'C4' },
+        ]
+        let count = 1;
+
+        var doc = new jsPDF('p', 'pt');
+        doc.page = 1;
+
+        var width = doc.internal.pageSize.getWidth();
+        var height = doc.internal.pageSize.getHeight();
+
+        var header = function () {
+
+            var imgData =  // Convert the image to base64 and place it here // 
+
+                // doc.setFontStyle('normal');
+
+                // move_from_left, move_from_height, width, height 
+                // doc.addImage(imgData, 'JPEG', 5, 10, width - 10, 65)
+
+                doc.setFontSize(14);
+            // doc.setFontStyle('bold');
+
+            // move_from_left, move_from_height
+            doc.text(200, 100, 'Water Consumption Report')
+        };
+
+        var footer = function () {
+            // var imgData = // Convert the image to base64 and place it here // 
+
+            //     //print number bottom right
+
+            //     doc.setFontSize(7);
+            // doc.text(width - 40, height - 30, 'Page - ' + doc.page);
+            // doc.page++;
+
+            // //_________________________________
+
+            // doc.addImage(imgData, 'JPEG', 5, height - 25, width - 10, 30)
+        };
+
+
+
+        var options = {
+            beforePageContent: header,
+            afterPageContent: footer,
+            theme: 'grid',
+            columnStyles: {
+                count: { columnWidth: 100, },
+                c1: { columnWidth: 200 },
+                c2: { columnWidth: 200 },
+                // c3: { columnWidth: 30 },
+                // c4: { columnWidth: 50, halign: 'right' },
+            },
+
+            headStyles: { fillColor: 'white', textColor: 'black' },
+            style: { cellWidth: 'auto' },
+            margin: { top: 150, bottom: 100, horizontal: 10 },
+        }
+
+
+        // Data Processing
+        console.log(this.state.data)
+        this.state.data.map((item, index) => {
+            let b = {
+                count: count,
+                c1: item.index,
+                c2: item.guid,
+                // c3: item.c3,
+                // c4: item.c4,
+            }
+
+            count++;
+            data.push(b);
+        })
+
+
+        doc.setFontSize(12)
+        doc.line(0, 145, width, 145)
+
+        doc.autoTable(col, data, options)
+
+        doc.save('Generate.pdf')
+    }
     render() {
         let sidebar;
         if (this.state.sidebarexp) {
@@ -231,7 +327,7 @@ class More extends React.Component {
                         style={this.state.style}
                         text={this.state.text}
                     />
-
+                    <Button onClick={this.jsPdfGenerator} type="primary"> Generate PDF </Button>
                 </div>
             </div>
         )
