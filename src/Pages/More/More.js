@@ -190,7 +190,6 @@ class More extends React.Component {
     }
     jsPdfGenerator = () => {
 
-        // Example From https://parall.ax/products/jspdf
         let data = [];
         let col = [
             { dataKey: 'count', header: 'Count' },
@@ -209,18 +208,19 @@ class More extends React.Component {
 
         var header = function () {
 
-            var imgData =  // Convert the image to base64 and place it here // 
+            // var imgData =  // Convert the image to base64 and place it here // 
 
-                // doc.setFontStyle('normal');
+            //     // doc.setFontStyle('normal');
 
-                // move_from_left, move_from_height, width, height 
-                // doc.addImage(imgData, 'JPEG', 5, 10, width - 10, 65)
+            //     // move_from_left, move_from_height, width, height 
+            //     // doc.addImage(imgData, 'JPEG', 5, 10, width - 10, 65)
 
-                doc.setFontSize(14);
-            // doc.setFontStyle('bold');
+            //     doc.setFontSize(14);
+            // // doc.setFontStyle('bold');
 
             // move_from_left, move_from_height
-            doc.text(200, 100, 'Water Consumption Report')
+            doc.setFontSize(25);
+            doc.text(150, 100, 'Water Consumption Report')
         };
 
         var footer = function () {
@@ -244,9 +244,9 @@ class More extends React.Component {
             afterPageContent: footer,
             theme: 'grid',
             columnStyles: {
-                count: { columnWidth: 100, },
-                c1: { columnWidth: 200 },
-                c2: { columnWidth: 200 },
+                count: { cellWidth: 100, },
+                c1: { cellWidth: 200 },
+                c2: { cellWidth: 200 },
                 // c3: { columnWidth: 30 },
                 // c4: { columnWidth: 50, halign: 'right' },
             },
