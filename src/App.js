@@ -105,6 +105,8 @@ class App extends React.Component {
                   storage={this.state.storage}
                   consumption={this.state.consumption}
                   quality={this.state.quality}
+                  auth={this.state.auth}
+                  industry={this.state.industry}
                 />
               )}
             />
@@ -156,7 +158,7 @@ class App extends React.Component {
               )}
             />
             <Route exact path="/login" >
-              <Redirect to="/dashboard" />
+              <Redirect to="/More" />
             </Route>
 
             <Route exact path="/trial" name="Trial Page" render={props => <Trial {...props} />} />
