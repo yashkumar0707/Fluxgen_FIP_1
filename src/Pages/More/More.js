@@ -14,6 +14,8 @@ import jsPDF from 'jspdf'
 
 // npm i jspdf-autotable
 import 'jspdf-autotable';
+
+import DatePicker from 'react-datepicker';
 class More extends React.Component {
     constructor(props) {
         super(props);
@@ -28,6 +30,9 @@ class More extends React.Component {
             sidebarexp: true,
             sidewidth: '18.05%',
             activePage: 'More',
+            startDate: new Date(),
+            endDate: new Date(),
+            startepochDate: new Date(),
             // Refer template.js for usefulness of above
             filename: 'Csv-file',
             fields: {
@@ -81,6 +86,7 @@ class More extends React.Component {
         // this.state.data.push({ index: "oho", guid: "1" })
         var categories = []
         console.log("auth: " + this.props.auth)
+        console.log(this.state.startDate)
         try {
             await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/category", {
                 method: 'GET',
@@ -137,6 +143,15 @@ class More extends React.Component {
             console.log(err.message);
         }
 
+
+
+    }
+
+    jsPdfGenerator = async () => {
+        let myheaders = {
+            //Token is added here
+            "authorization": this.props.auth
+        }
         try {
             //console.log(this.state.units)
             var units = this.state.units
@@ -150,7 +165,7 @@ class More extends React.Component {
                 unit_total[i] = 0
                 for (var j = 0; j < units[i].length; j++) {
                     //console.log(this.state.units[i][j])
-                    await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=1608361825&createdBefore=1608371825&unit_id=" + units[i][j], {
+                    await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
                         method: 'GET',
                         headers: myheaders
                     })
@@ -185,12 +200,8 @@ class More extends React.Component {
         catch (err) {
             console.log(err.message);
         }
-
         console.log(this.state.unit_value_total, this.state.data)
-    }
-    jsPdfGenerator = () => {
-
-        let data = [];
+        data = [];
         let col = [
             { dataKey: 'count', header: 'Count' },
             { dataKey: 'c1', header: 'Units' },
@@ -280,6 +291,19 @@ class More extends React.Component {
 
         doc.save('Generate.pdf')
     }
+    handleChange = (date) => {
+        console.log(date)
+        this.setState({ startDate: date })
+        var epoch = new Date(date).getTime() / 1000
+        var hours = date.getHours(); // => 9
+        var minutes = date.getMinutes(); // =>  30
+        var seconds = date.getSeconds(); // => 51
+        seconds = hours * 60 * 60 + minutes * 60 + seconds
+        var start = epoch - seconds
+        var end = epoch
+        this.setState({ startepochDate: start, endDate: end })
+        console.log(start, end)
+    }
     render() {
         let sidebar;
         if (this.state.sidebarexp) {
@@ -328,6 +352,12 @@ class More extends React.Component {
                         text={this.state.text}
                     />
                     <Button onClick={this.jsPdfGenerator} type="primary"> Generate PDF </Button>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleChange}
+                        name="startDate"
+                        dateFormat="MM/dd/yyyy"
+                    />
                 </div>
             </div>
         )
