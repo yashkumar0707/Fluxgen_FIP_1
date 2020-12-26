@@ -32,6 +32,7 @@
     "node-sass": "^4.14.1",
     "potrace": "^2.1.6",
     "react": "^16.13.1",
+    "react-blink-text": "^1.0.5",
     "react-bootstrap": "^1.0.1",
     "react-chartjs-2": "^2.9.0",
     "react-datepicker": "^3.1.3",

@@ -14,7 +14,7 @@ import jsPDF from 'jspdf'
 
 // npm i jspdf-autotable
 import 'jspdf-autotable';
-
+import Blink from 'react-blink-text';
 import DatePicker from 'react-datepicker';
 class Report extends React.Component {
     constructor(props) {
@@ -399,15 +399,23 @@ class Report extends React.Component {
                     />
                     <Button onClick={this.CsvGenerator} type="primary"> Generate CSV </Button>
                     {
-                        this.state.csv_wait && <p>yash</p>
+                        this.state.csv_wait &&
+                        <Blink color='blue' text='Please wait CSV is being generated' fontSize='30px'>
+                            Testing the Blink
+                        </Blink>
                     }
-                    {this.state.csv_flag && <JsonToCsv
-                        data={this.state.data}
-                        filename={this.state.filename}
-                        fields={this.state.fields}
-                        style={this.state.style}
-                        text={this.state.text}
-                    />}
+                    {this.state.csv_flag && <div>
+                        <JsonToCsv
+                            data={this.state.data}
+                            filename={this.state.filename}
+                            fields={this.state.fields}
+                            style={this.state.style}
+                            text={this.state.text}
+                        />
+                        <Blink color='blue' text='Download the CSV file' fontSize='30px'>
+                            Testing the Blink
+                        </Blink>
+                    </div>}
                     <Button onClick={this.jsPdfGenerator} type="primary"> Generate PDF </Button>
 
                 </div>
