@@ -7,6 +7,7 @@ import Activity from './Pages/ActivityLog/ActivityLog'
 import More from './Pages/More/More'
 import Contact from './Pages/Contact_Us_FaQ/Contact_Us'
 import Template from './Pages/Template_with_sidebar_Nav/Template';
+import Report from './Pages/Reports/Report'
 import "core-js";
 import 'core-js/features/set/map';
 import './App.scss';
@@ -102,6 +103,17 @@ class App extends React.Component {
             <Route exact path="/More"
               render={props => (
                 <More {...props}
+                  storage={this.state.storage}
+                  consumption={this.state.consumption}
+                  quality={this.state.quality}
+                  auth={this.state.auth}
+                  industry={this.state.industry}
+                />
+              )}
+            />
+            <Route exact path="/Report"
+              render={props => (
+                <Report {...props}
                   storage={this.state.storage}
                   consumption={this.state.consumption}
                   quality={this.state.quality}

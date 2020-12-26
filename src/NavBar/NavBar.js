@@ -103,17 +103,17 @@ const NavBar = (props) => {
                     {/* </Link> */}
 
                     {/* Static username and dropdown */}
-                    <div className="toolbar_username">
+                    {/* <div className="toolbar_username">
                         {/* Default username */}
-                        <p className="toolbar_username_text">Ganesh</p>
+                    {/* <p className="toolbar_username_text">Ganesh</p>
                         {/* Arrowdown icon */}
-                        <KeyboardArrowDown className="toolbar_username_drop" />
-                    </div>
+                    {/* <KeyboardArrowDown className="toolbar_username_drop" />
+                    </div> */}
 
                     {/* Default image Avatar imported from same folder */}
-                    <div className="toolbar_useravatar">
+                    {/* <div className="toolbar_useravatar">
                         <Avatar alt="Remy Sharp" src={Image_1} />
-                    </div>
+                    </div> */}
                 </header>
                 < div className="yash"  >
                     {/* <TextField variant="filled" value="yash  this is the watboy image , checking for overflow" className="textbox" /> */}
@@ -138,21 +138,22 @@ const NavBar = (props) => {
             } */}
             </div>
             }
-            {!flag && <Switch>
-                {/* <Redirect to="/login" ></Redirect> */}
-                {/* <Route exact path="/">
+            {
+                !flag && <Switch>
+                    {/* <Redirect to="/login" ></Redirect> */}
+                    {/* <Route exact path="/">
 
                 </Route> */}
-                <Route exact path="/login"
-                    name="Login Page"
-                    render={props => (
-                        <Login {...props}
-                            appCallBack1={this.loginCallBack} />
-                    )} />
-                <Route exact path="/:pid">
-                    <Redirect to="/login" />
-                </Route>
-            </Switch>
+                    <Route exact path="/login"
+                        name="Login Page"
+                        render={props => (
+                            <Login {...props}
+                                appCallBack1={this.loginCallBack} />
+                        )} />
+                    <Route exact path="/:pid">
+                        <Redirect to="/login" />
+                    </Route>
+                </Switch>
                 // && <Redirect to='/login' name="Login Page"
                 //   render={props => (
                 //     <Login {...props}
