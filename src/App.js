@@ -184,7 +184,7 @@ class App extends React.Component {
           {!this.state.auth && <Switch>
             {/* <Redirect to="/login" ></Redirect> */}
             <Route exact path="/">
-
+              <Redirect to="/login" />
             </Route>
             <Route exact path="/login"
               name="Login Page"

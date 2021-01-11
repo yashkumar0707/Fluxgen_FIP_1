@@ -280,7 +280,6 @@ class Report extends React.Component {
                 // c3: item.c3,
                 // c4: item.c4,
             }
-
             count++;
             data.push(b);
         })
