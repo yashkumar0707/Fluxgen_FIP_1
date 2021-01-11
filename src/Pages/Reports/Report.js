@@ -31,7 +31,7 @@ class Report extends React.Component {
             sidewidth: '18.05%',
             activePage: 'More',
             csv_wait: false,
-            startDate: new Date(),
+            startDate: '',
             endDate: new Date(),
             startepochDate: new Date(),
             csv_flag: false,
@@ -48,7 +48,7 @@ class Report extends React.Component {
                 // { index: "oho", guid: '1' },
                 // { index: "oho", guid: '1' }
             ],
-            text: "Convert Json to Csv",
+            text: "Download CSV",
             array1: [{ c1: "yash", c2: "yash", c3: "yash" }, { c2: "yash" }, "yash"]
         }
 
@@ -305,7 +305,10 @@ class Report extends React.Component {
         this.setState({ startepochDate: start, endDate: end, csv_flag: false, unit_value: [], unit_value_total: [], pdf_data: [], data: [] })
         console.log(start, end)
     }
-
+    downloadedCsv = () => {
+        console.log('YAGSHSG')
+        this.setState({ csv_flag: false })
+    }
     CsvGenerator = async () => {
         let myheaders = {
             //Token is added here
@@ -403,13 +406,14 @@ class Report extends React.Component {
                             Testing the Blink
                         </Blink>
                     }
-                    {this.state.csv_flag && <div>
+                    {this.state.csv_flag && <div onClick={this.downloadedCsv}>
                         <JsonToCsv
                             data={this.state.data}
                             filename={this.state.filename}
                             fields={this.state.fields}
                             style={this.state.style}
                             text={this.state.text}
+
                         />
                         <Blink color='blue' text='Download the CSV file' fontSize='30px'>
                             Testing the Blink
