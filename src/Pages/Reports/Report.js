@@ -397,13 +397,15 @@ class Report extends React.Component {
                 {/* Initial setup for sidebar + navbar layout */}
                 <div className="MainMorePage_Content" style={{ "position": "fixed", "top": "10vh", "left": this.state.sidewidth }}>
 
+                    Please Select a Date:-
                     <DatePicker
                         selected={this.state.startDate}
                         onChange={this.handleChange}
                         name="startDate"
                         dateFormat="MM/dd/yyyy"
                     />
-                    <Button onClick={this.CsvGenerator} type="primary"> Generate CSV </Button>
+                    <br></br>
+                    <Button onClick={this.CsvGenerator} variant="contained" color="primary"> Generate CSV </Button>
                     {
                         this.state.csv_wait &&
                         <Blink color='blue' text='Please wait CSV is being generated' fontSize='30px'>
@@ -423,7 +425,11 @@ class Report extends React.Component {
                             Testing the Blink
                         </Blink>
                     </div>}
-                    <Button onClick={this.jsPdfGenerator} type="primary"> Generate PDF </Button>
+                    {/* <Button onClick={this.jsPdfGenerator} varaiant="contained" color="blue"> Generate PDF </Button> */}
+                    <br></br>
+                    <Button onClick={this.jsPdfGenerator} variant="contained" color="primary">
+                        Generate PDF
+                    </Button>
 
                 </div>
             </div>
