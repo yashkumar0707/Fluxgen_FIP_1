@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import Image from './fluxgen.png';
 import Image1 from './AquaGen.jpeg';
-
+import Image2 from './fluxgen_logo_new.png'
 
 class Login extends Component {
   constructor(props) {
@@ -111,6 +111,12 @@ class Login extends Component {
                       </Col>
                     </Row>
                     <br />
+                    <Row>
+                      {/* <div className="image_center"> */}
+                      <img src={Image2} alt="Login-page" style={{ width: '70%', paddingLeft: '20%' }} />
+                      {/* </div> */}
+                    </Row>
+                    <br></br>
                     <Row>
                       {this.state.flag === 1 && <p style={{ color: "red" }}>Incorrect login credentials, please try again</p>}
                       {this.state.flag === 2 && <p style={{ color: "red" }}>Enter all input fields</p>}
