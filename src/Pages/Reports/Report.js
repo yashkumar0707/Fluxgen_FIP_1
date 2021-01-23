@@ -31,7 +31,7 @@ class Report extends React.Component {
             sidewidth: '18.05%',
             activePage: 'More',
             csv_wait: false,
-            startDate: '',
+            startDate: new Date(),
             endDate: new Date(),
             startepochDate: new Date(),
             csv_flag: false,
@@ -96,13 +96,17 @@ class Report extends React.Component {
             })
                 .then(response => response.json())
                 .then(bar => {
-                    var i;
+                    var i, j = 0;
                     for (i = 0; i < bar.data.length; i++) {
                         console.log(bar.data[i].category)
-                        categories[i] = bar.data[i].category
+                        if (bar.data[i].category != 'Storage') {
+                            categories[j] = bar.data[i].category
+                            j++
+                        }
                     }
                 }
                 )
+            console.log(categories)
             this.setState({ categories: categories })
 
         } catch (err) {
@@ -166,14 +170,14 @@ class Report extends React.Component {
                 unit_value = []
                 unit_total[i] = 0
                 for (var j = 0; j < units[i].length; j++) {
-                    //console.log(this.state.units[i][j])
+                    console.log(this.state.units[i][j])
                     await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
                         method: 'GET',
                         headers: myheaders
                     })
                         .then(response => response.json())
                         .then(bar => {
-                            //console.log(bar.data.total_consumption)
+                            console.log(bar.data.total_consumption)
                             unit_value[j] = bar.data.total_consumption
                             unit_total[i] += parseFloat(bar.data.total_consumption)
                         }
@@ -181,7 +185,7 @@ class Report extends React.Component {
                 }
                 unit_value_total[i] = unit_value
             }
-            this.setState({ unit_value: unit_value_total, unit_value_total: unit_total })
+            this.setState({ unit_value: unit_value_total, unit_value_total: unit_total, data: [] })
 
         } catch (err) {
             console.log(err.message);
@@ -194,7 +198,7 @@ class Report extends React.Component {
                 this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
                 for (var j = 0; j < this.state.units[i].length; j++) {
                     this.state.data.push({ index: this.state.unit_name[i][j], guid: this.state.unit_value[i][j] })
-                    //console.log(this.state.unit_name[i][j])
+                    console.log(this.state.unit_name[i][j])
                 }
             }
             this.setState({ pdf_data })
