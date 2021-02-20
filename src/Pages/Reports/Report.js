@@ -354,6 +354,7 @@ class Report extends React.Component {
         try {
             var pdf_data = []
             var data = []
+            this.setState({ data: [] })
             for (var i = 0; i < this.state.units.length; i++) {
                 //{ index: 0, guid: 'asdf231234' }
                 this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
