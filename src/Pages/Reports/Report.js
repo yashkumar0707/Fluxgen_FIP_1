@@ -32,9 +32,10 @@ class Report extends React.Component {
             activePage: 'More',
             csv_wait: false,
             startDate: new Date(),
-            endDate: new Date(),
-            startepochDate: new Date(),
+            endDate: '',
+            startepochDate: '',
             csv_flag: false,
+            selectdate_flag: false,
             // Refer template.js for usefulness of above
             filename: 'Csv-file',
             fields: {
@@ -158,143 +159,150 @@ class Report extends React.Component {
             //Token is added here
             "authorization": this.props.auth
         }
-        try {
-            //console.log(this.state.units)
-            var units = this.state.units
-            var unit_name = this.state.unit_name
-            var unit_value = []
-            var unit_value_total = []
-            var unit_total = []
-            var unit_total2 = []
-            for (var i = 0; i < units.length; i++) {
-                unit_value = []
-                unit_total[i] = 0
-                for (var j = 0; j < units[i].length; j++) {
-                    console.log(this.state.units[i][j])
-                    await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
-                        method: 'GET',
-                        headers: myheaders
-                    })
-                        .then(response => response.json())
-                        .then(bar => {
-                            console.log(bar.data.total_consumption)
-                            unit_value[j] = bar.data.total_consumption
-                            unit_total[i] += parseFloat(bar.data.total_consumption)
-                        }
-                        )
+        if (this.state.startepochDate == this.state.endDate) {
+            console.log('ayaghyagyagyg', this.state.startepochDate, this.state.endDate)
+            this.setState({ selectdate_flag: true })
+            // return ('<h1>Please select a date</h1>')
+        }
+        else {
+            try {
+                //console.log(this.state.units)
+                var units = this.state.units
+                var unit_name = this.state.unit_name
+                var unit_value = []
+                var unit_value_total = []
+                var unit_total = []
+                var unit_total2 = []
+                for (var i = 0; i < units.length; i++) {
+                    unit_value = []
+                    unit_total[i] = 0
+                    for (var j = 0; j < units[i].length; j++) {
+                        console.log(this.state.units[i][j])
+                        await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
+                            method: 'GET',
+                            headers: myheaders
+                        })
+                            .then(response => response.json())
+                            .then(bar => {
+                                console.log(bar.data.total_consumption)
+                                unit_value[j] = bar.data.total_consumption
+                                unit_total[i] += parseFloat(bar.data.total_consumption)
+                            }
+                            )
+                    }
+                    unit_value_total[i] = unit_value
                 }
-                unit_value_total[i] = unit_value
-            }
-            this.setState({ unit_value: unit_value_total, unit_value_total: unit_total, data: [] })
+                this.setState({ unit_value: unit_value_total, unit_value_total: unit_total, data: [] })
 
-        } catch (err) {
-            console.log(err.message);
-        }
-        try {
-            var pdf_data = []
-            var data = []
-            for (var i = 0; i < this.state.units.length; i++) {
-                //{ index: 0, guid: 'asdf231234' }
-                this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
-                for (var j = 0; j < this.state.units[i].length; j++) {
-                    this.state.data.push({ index: this.state.unit_name[i][j], guid: this.state.unit_value[i][j] })
-                    console.log(this.state.unit_name[i][j])
+            } catch (err) {
+                console.log(err.message);
+            }
+            try {
+                var pdf_data = []
+                var data = []
+                for (var i = 0; i < this.state.units.length; i++) {
+                    //{ index: 0, guid: 'asdf231234' }
+                    this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
+                    for (var j = 0; j < this.state.units[i].length; j++) {
+                        this.state.data.push({ index: this.state.unit_name[i][j], guid: this.state.unit_value[i][j] })
+                        console.log(this.state.unit_name[i][j])
+                    }
                 }
+                this.setState({ pdf_data })
             }
-            this.setState({ pdf_data })
-        }
-        catch (err) {
-            console.log(err.message);
-        }
-        console.log(this.state.unit_value_total, this.state.data)
-        data = [];
-        let col = [
-            { dataKey: 'count', header: 'Count' },
-            { dataKey: 'c1', header: 'Units' },
-            { dataKey: 'c2', header: 'Consumption' },
-            // { dataKey: 'c3', header: 'C3' },
-            // { dataKey: 'c4', header: 'C4' },
-        ]
-        let count = 1;
-
-        var doc = new jsPDF('p', 'pt');
-        doc.page = 1;
-
-        var width = doc.internal.pageSize.getWidth();
-        var height = doc.internal.pageSize.getHeight();
-
-        var header = function () {
-
-            // var imgData =  // Convert the image to base64 and place it here // 
-
-            //     // doc.setFontStyle('normal');
-
-            //     // move_from_left, move_from_height, width, height 
-            //     // doc.addImage(imgData, 'JPEG', 5, 10, width - 10, 65)
-
-            //     doc.setFontSize(14);
-            // // doc.setFontStyle('bold');
-
-            // move_from_left, move_from_height
-            doc.setFontSize(25);
-            doc.text(150, 100, 'Water Consumption Report')
-        };
-
-        var footer = function () {
-            // var imgData = // Convert the image to base64 and place it here // 
-
-            //     //print number bottom right
-
-            //     doc.setFontSize(7);
-            // doc.text(width - 40, height - 30, 'Page - ' + doc.page);
-            // doc.page++;
-
-            // //_________________________________
-
-            // doc.addImage(imgData, 'JPEG', 5, height - 25, width - 10, 30)
-        };
-
-
-
-        var options = {
-            beforePageContent: header,
-            afterPageContent: footer,
-            theme: 'grid',
-            columnStyles: {
-                count: { cellWidth: 100, },
-                c1: { cellWidth: 200 },
-                c2: { cellWidth: 200 },
-                // c3: { columnWidth: 30 },
-                // c4: { columnWidth: 50, halign: 'right' },
-            },
-
-            headStyles: { fillColor: 'white', textColor: 'black' },
-            style: { cellWidth: 'auto' },
-            margin: { top: 150, bottom: 100, horizontal: 10 },
-        }
-
-
-        // Data Processing
-        console.log(this.state.data)
-        this.state.data.map((item, index) => {
-            let b = {
-                count: count,
-                c1: item.index,
-                c2: item.guid,
-                // c3: item.c3,
-                // c4: item.c4,
+            catch (err) {
+                console.log(err.message);
             }
-            count++;
-            data.push(b);
-        })
+            console.log(this.state.unit_value_total, this.state.data)
+            data = [];
+            let col = [
+                { dataKey: 'count', header: 'Count' },
+                { dataKey: 'c1', header: 'Units' },
+                { dataKey: 'c2', header: 'Consumption' },
+                // { dataKey: 'c3', header: 'C3' },
+                // { dataKey: 'c4', header: 'C4' },
+            ]
+            let count = 1;
+
+            var doc = new jsPDF('p', 'pt');
+            doc.page = 1;
+
+            var width = doc.internal.pageSize.getWidth();
+            var height = doc.internal.pageSize.getHeight();
+
+            var header = function () {
+
+                // var imgData =  // Convert the image to base64 and place it here // 
+
+                //     // doc.setFontStyle('normal');
+
+                //     // move_from_left, move_from_height, width, height 
+                //     // doc.addImage(imgData, 'JPEG', 5, 10, width - 10, 65)
+
+                //     doc.setFontSize(14);
+                // // doc.setFontStyle('bold');
+
+                // move_from_left, move_from_height
+                doc.setFontSize(25);
+                doc.text(150, 100, 'Water Consumption Report')
+            };
+
+            var footer = function () {
+                // var imgData = // Convert the image to base64 and place it here // 
+
+                //     //print number bottom right
+
+                //     doc.setFontSize(7);
+                // doc.text(width - 40, height - 30, 'Page - ' + doc.page);
+                // doc.page++;
+
+                // //_________________________________
+
+                // doc.addImage(imgData, 'JPEG', 5, height - 25, width - 10, 30)
+            };
 
 
-        doc.setFontSize(12)
-        doc.line(0, 145, width, 145)
 
-        doc.autoTable(col, data, options)
+            var options = {
+                beforePageContent: header,
+                afterPageContent: footer,
+                theme: 'grid',
+                columnStyles: {
+                    count: { cellWidth: 100, },
+                    c1: { cellWidth: 200 },
+                    c2: { cellWidth: 200 },
+                    // c3: { columnWidth: 30 },
+                    // c4: { columnWidth: 50, halign: 'right' },
+                },
 
-        doc.save('Generate.pdf')
+                headStyles: { fillColor: 'white', textColor: 'black' },
+                style: { cellWidth: 'auto' },
+                margin: { top: 150, bottom: 100, horizontal: 10 },
+            }
+
+
+            // Data Processing
+            console.log(this.state.data)
+            this.state.data.map((item, index) => {
+                let b = {
+                    count: count,
+                    c1: item.index,
+                    c2: item.guid,
+                    // c3: item.c3,
+                    // c4: item.c4,
+                }
+                count++;
+                data.push(b);
+            })
+
+
+            doc.setFontSize(12)
+            doc.line(0, 145, width, 145)
+
+            doc.autoTable(col, data, options)
+
+            doc.save('Generate.pdf')
+        }
     }
     handleChange = (date) => {
         console.log(date)
@@ -306,7 +314,7 @@ class Report extends React.Component {
         seconds = hours * 60 * 60 + minutes * 60 + seconds
         var start = epoch - seconds
         var end = epoch
-        this.setState({ startepochDate: start, endDate: end, csv_flag: false, unit_value: [], unit_value_total: [], pdf_data: [], data: [] })
+        this.setState({ selectdate_flag: false, startepochDate: start, endDate: end, csv_flag: false, unit_value: [], unit_value_total: [], pdf_data: [], data: [] })
         console.log(start, end)
     }
     downloadedCsv = () => {
@@ -318,58 +326,65 @@ class Report extends React.Component {
             //Token is added here
             "authorization": this.props.auth
         }
-        this.setState({ csv_wait: true })
-        try {
-            //console.log(this.state.units)
-            var units = this.state.units
-            var unit_name = this.state.unit_name
-            var unit_value = []
-            var unit_value_total = []
-            var unit_total = []
-            var unit_total2 = []
-            for (var i = 0; i < units.length; i++) {
-                unit_value = []
-                unit_total[i] = 0
-                for (var j = 0; j < units[i].length; j++) {
-                    //console.log(this.state.units[i][j])
-                    await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
-                        method: 'GET',
-                        headers: myheaders
-                    })
-                        .then(response => response.json())
-                        .then(bar => {
-                            //console.log(bar.data.total_consumption)
-                            unit_value[j] = bar.data.total_consumption
-                            unit_total[i] += parseFloat(bar.data.total_consumption)
-                        }
-                        )
-                }
-                unit_value_total[i] = unit_value
-            }
-            this.setState({ unit_value: unit_value_total, unit_value_total: unit_total })
 
-        } catch (err) {
-            console.log(err.message);
+        if (this.state.startepochDate == this.state.endDate) {
+            console.log('ayaghyagyagyg', this.state.startepochDate, this.state.endDate)
+            this.setState({ selectdate_flag: true })
+            // return ('<h1>Please select a date</h1>')
         }
-        try {
-            var pdf_data = []
-            var data = []
-            this.setState({ data: [] })
-            for (var i = 0; i < this.state.units.length; i++) {
-                //{ index: 0, guid: 'asdf231234' }
-                this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
-                for (var j = 0; j < this.state.units[i].length; j++) {
-                    this.state.data.push({ index: this.state.unit_name[i][j], guid: this.state.unit_value[i][j] })
-                    //console.log(this.state.unit_name[i][j])
+        else {
+            this.setState({ csv_wait: true })
+            try {
+                //console.log(this.state.units)
+                var units = this.state.units
+                var unit_name = this.state.unit_name
+                var unit_value = []
+                var unit_value_total = []
+                var unit_total = []
+                var unit_total2 = []
+                for (var i = 0; i < units.length; i++) {
+                    unit_value = []
+                    unit_total[i] = 0
+                    for (var j = 0; j < units[i].length; j++) {
+                        //console.log(this.state.units[i][j])
+                        await fetch("https://api.fluxgen.in/aquagen/v1/industries/" + this.props.industry + "/consumption/report?duration=hourlyreport&createdAfter=" + this.state.startepochDate + "&createdBefore=" + this.state.endDate + "&unit_id=" + units[i][j], {
+                            method: 'GET',
+                            headers: myheaders
+                        })
+                            .then(response => response.json())
+                            .then(bar => {
+                                //console.log(bar.data.total_consumption)
+                                unit_value[j] = bar.data.total_consumption
+                                unit_total[i] += parseFloat(bar.data.total_consumption)
+                            }
+                            )
+                    }
+                    unit_value_total[i] = unit_value
                 }
+                this.setState({ unit_value: unit_value_total, unit_value_total: unit_total })
+
+            } catch (err) {
+                console.log(err.message);
             }
-            this.setState({ pdf_data, csv_flag: true, csv_wait: false })
-        }
-        catch (err) {
-            console.log(err.message);
+            try {
+                var pdf_data = []
+                var data = []
+                this.setState({ data: [] })
+                for (var i = 0; i < this.state.units.length; i++) {
+                    //{ index: 0, guid: 'asdf231234' }
+                    this.state.data.push({ index: this.state.categories[i], guid: this.state.unit_value_total[i] })
+                    for (var j = 0; j < this.state.units[i].length; j++) {
+                        this.state.data.push({ index: this.state.unit_name[i][j], guid: this.state.unit_value[i][j] })
+                        //console.log(this.state.unit_name[i][j])
+                    }
+                }
+                this.setState({ pdf_data, csv_flag: true, csv_wait: false })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
     }
-
     render() {
         let sidebar;
         if (this.state.sidebarexp) {
@@ -431,7 +446,11 @@ class Report extends React.Component {
                     <Button onClick={this.jsPdfGenerator} variant="contained" color="primary">
                         Generate PDF
                     </Button>
-
+                    {this.state.selectdate_flag &&
+                        <Blink color='blue' text='Please select a date' fontSize='30px'>
+                            Testing the Blink
+                    </Blink>
+                    }
                 </div>
             </div>
         )
