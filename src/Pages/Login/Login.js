@@ -4,7 +4,7 @@ import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputG
 import Image from './fluxgen.png';
 import Image1 from './AquaGen.jpeg';
 import Image2 from './fluxgen_logo_new.png'
-
+import Image3 from './logo.png'
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -111,9 +111,9 @@ class Login extends Component {
                       </Col>
                     </Row>
                     <br />
-                    <Row>
+                    <Row textAlign="center">
                       {/* <div className="image_center"> */}
-                      <img src={Image2} alt="Login-page" style={{ width: '70%', paddingLeft: '20%' }} />
+                      <img src={Image3} alt="Login-page" style={{ width: '80%', height: '100%', paddingLeft: '50px', paddingBottom: '-20px' }} />
                       {/* </div> */}
                     </Row>
                     <br></br>
