@@ -37,6 +37,7 @@ class Dashboard extends React.Component {
             activeState: 'Home',
             radioSelected: 1,
             today: moment().format('DD-MM-YYYY'),
+
             date: [],
             date_daily: [],
             date_weekly: [],

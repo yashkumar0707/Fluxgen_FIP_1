@@ -61,6 +61,7 @@ const theme = createMuiTheme({
 class SideBarExp extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             Home: false,
             water_con: false,
@@ -69,6 +70,7 @@ class SideBarExp extends React.Component {
             more: false,
             curr: '',
             width: 1000,
+            page: ''
         }
         this.setHome = this.setHome.bind(this)
         this.setWaterCon = this.setWaterCon.bind(this)
@@ -89,6 +91,7 @@ class SideBarExp extends React.Component {
             curr: 'Home',
             width: width
         }
+        this.state.page = 'Home'
         this.setState(newState)
         console.log(this.state)
         this.props.activeState("Home")
@@ -307,7 +310,7 @@ class SideBarExp extends React.Component {
 
                         {/* <Home /> */}
                         <Link to="/dashboard">
-                            <ListItem className="SideBar_ListItem" button selected={this.state.Home} onClick={this.setHome}>
+                            <ListItem className="SideBar_ListItem" button selected={this.state.Home} onClick={this.setHome} autoFocus={this.state.page === 'Home'}>
                                 <ListItemIcon className="SideBar_ListItemIcon">
                                     <SvgIcon>
                                         {/* Path tag for home icon */}
@@ -404,7 +407,7 @@ class SideBarExp extends React.Component {
 
                         {/* More Button */}
                         <Link to="/More">
-                            <ListItem className="SideBar_ListItem" button onClick={this.setMore}>
+                            <ListItem className="SideBar_ListItem" button onClick={this.setMore} >
 
                                 <ListItemIcon>
                                     {/* Path tag for More icon */}

@@ -52,7 +52,6 @@ class Report extends React.Component {
             text: "Download CSV",
             array1: [{ c1: "yash", c2: "yash", c3: "yash" }, { c2: "yash" }, "yash"]
         }
-
     }
     // Refer template.js
     arrowClick = () => {
