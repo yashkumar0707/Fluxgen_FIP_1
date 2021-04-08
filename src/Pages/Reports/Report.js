@@ -16,6 +16,24 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable';
 import Blink from 'react-blink-text';
 import DatePicker from 'react-datepicker';
+import Paper from '@material-ui/core/Paper';
+import {
+    Chart,
+    ArgumentAxis,
+    ValueAxis,
+    LineSeries,
+    ZoomAndPan,
+} from '@devexpress/dx-react-chart-material-ui';
+const generateData = (n) => {
+    const ret = [];
+    let y = 0;
+    for (let i = 0; i < n; i += 1) {
+        y += Math.round(Math.random() * 10 - 5);
+        ret.push({ x: i, y });
+    }
+    return ret;
+};
+const data1 = generateData(100);
 class Report extends React.Component {
     constructor(props) {
         super(props);
@@ -49,9 +67,12 @@ class Report extends React.Component {
                 // { index: "oho", guid: '1' },
                 // { index: "oho", guid: '1' }
             ],
+            viewport: undefined,
+            data1,
             text: "Download CSV",
             array1: [{ c1: "yash", c2: "yash", c3: "yash" }, { c2: "yash" }, "yash"]
         }
+        this.viewportChange = viewport => this.setState({ viewport });
     }
     // Refer template.js
     arrowClick = () => {
@@ -385,6 +406,10 @@ class Report extends React.Component {
         }
     }
     render() {
+        const {
+            data1: chartData,
+            viewport,
+        } = this.state;
         let sidebar;
         if (this.state.sidebarexp) {
             sidebar =
@@ -450,6 +475,19 @@ class Report extends React.Component {
                             Testing the Blink
                     </Blink>
                     }
+
+
+                </div>
+                <div style={{ marginTop: 300, marginLeft: 400, height: 300, width: 800 }}>
+                    <Paper>
+                        <Chart data={chartData}>
+                            <ArgumentAxis />
+                            <ValueAxis />
+
+                            <LineSeries valueField="y" argumentField="x" />
+                            <ZoomAndPan viewport={viewport} onViewportChange={this.viewportChange} />
+                        </Chart>
+                    </Paper>
                 </div>
             </div>
         )
